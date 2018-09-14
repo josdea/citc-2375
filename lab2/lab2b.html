@@ -6,6 +6,7 @@
   <meta charset="utf-8">
   <meta http-equiv="refresh" content="5">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="https://fonts.googleapis.com/css?family=Nova+Flat|Roboto" rel="stylesheet">
   <!-- Bootstrap CSS -->
   <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous"> -->
   <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
@@ -13,18 +14,60 @@
   <title>Customer Satisfaction Survey</title>
 
 <style>
-body{padding: 0em 3em;}
+  body {
+    font-family: "Nova Flat", cursive;
+    padding: 0em 3em;
+    background-image: radial-gradient(gray, black);
+  }
+  form {
+    background-color: white;
+    padding: 1em;
+    font-family: "Roboto", sans-serif;
+    line-height: 1.7em;
+
+  }
+
+  h1 {
+    color: white;
+    text-align: center;
+  }
+  .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  form legend {
+    font-size: 2em;
+  }
+  #testdrivecount {
+    padding: 8px 4px;
+    cursor: text;
+  }
+
+  button {
+    padding: 12px;
+  }
+
+  input,
+  button {
+    cursor: pointer;
+  }
+  .form-group{
+    margin-bottom: 1em;
+  }
+
 </style>
 </head>
 
 <body>
 
   <div class="container">
-    <h1>Dean Jaguar </h1>
+     <h1>Dean Jaguar </h1>
+  <img class="center" src="./jaguar-logo.png" alt="jag logo">
     <hr>
-    <p>Thank you for spending your time shopping with Jaguar. We value your feedback of your experience with us.</p>
-
     <form class="form-horizontal">
+  <p>Thank you for spending your time shopping with Jaguar. We value your feedback of your experience with us.</p>
       <fieldset>
 
         <!-- Form Name -->
@@ -221,7 +264,7 @@ body{padding: 0em 3em;}
 
         <!-- Button (Double) -->
         <div class="form-group">
-          <label class="col-md-4 control-label" for="submit">Submit</label>
+          <label class="col-md-4 control-label" for="submit"></label>
           <div class="col-md-8">
             <button id="submit" name="submit" class="btn btn-success">Submit Feedback</button>
             <button id="reset" name="reset" class="btn btn-warning">Reset Form</button>
