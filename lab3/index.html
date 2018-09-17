@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+
+<!-- lab 2 part a
+Josh Dean
+CITC 2375
+Fall 2018
+Manipulating tables with css -->
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <!-- <meta http-equiv="refresh" content="5"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="https://fonts.googleapis.com/css?family=Nova+Flat|Roboto" rel="stylesheet">
+  <!-- Bootstrap CSS -->
+  <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous"> -->
+  <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
+      crossorigin="anonymous"> -->
+  <title>Customer Satisfaction Survey</title>
+
+<style>
+ 
+</style>
+<link rel="stylesheet/less" type="text/css" href="styles.less" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.7.1/less.min.js" ></script>
+
+
+</head>
+
+<body>
+
+  <div class="container">
+     <h1>Dean Jaguar </h1>
+  <img class="center" src="./jaguar-logo.png" alt="jag logo">
+    <hr>
+    <form class="form-horizontal">
+  <p>Thank you for spending your time shopping with Jaguar. We value your feedback of your experience with us.</p>
+      <fieldset>
+
+        <!-- Form Name -->
+        <legend>Customer Satisfaction Survey</legend>
+
+               <!-- Multiple Radios (inline) -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="firsttime">Was this your first visit to Dean Jaguar?</label>
+          <div class="col-md-4">
+            <label class="radio-inline" for="firsttime-0">
+              <input type="radio" name="firsttime" id="firsttime-0" value="yes" checked="checked">
+              Yes
+            </label>
+            <label class="radio-inline" for="firsttime-1">
+              <input type="radio" name="firsttime" id="firsttime-1" value="no">
+              No
+            </label>
+          </div>
+        </div>
+
+        <!-- Multiple Radios (inline) -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="greeted">Were you greeted at the door by a sales agent or at the support desk?</label>
+          <div class="col-md-4">
+            <label class="radio-inline" for="greeted-0">
+              <input type="radio" name="greeted" id="greeted-0" value="yes" checked="checked">
+              Yes
+            </label>
+            <label class="radio-inline" for="greeted-1">
+              <input type="radio" name="greeted" id="greeted-1" value="no">
+              No
+            </label>
+          </div>
+        </div>
+
+        <!-- Multiple Radios (inline) -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="havecar">Did we have the make, model, or color of car for which you were looking?</label>
+          <div class="col-md-4">
+            <label class="radio-inline" for="havecar-0">
+              <input type="radio" name="havecar" id="havecar-0" value="yes" checked="checked">
+              Yes
+            </label>
+            <label class="radio-inline" for="havecar-1">
+              <input type="radio" name="havecar" id="havecar-1" value="no">
+              No
+            </label>
+          </div>
+        </div>
+
+        <!-- Multiple Radios (inline) -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="testdrive">Did you take a test drive during your visit?</label>
+          <div class="col-md-4">
+            <label class="radio-inline" for="testdrive-0">
+              <input type="radio" name="testdrive" id="testdrive-0" value="yes" checked="checked">
+              Yes
+            </label>
+            <label class="radio-inline" for="testdrive-1">
+              <input type="radio" name="testdrive" id="testdrive-1" value="no">
+              No
+            </label>
+          </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="testdrivecount">If yes, how many cars did you test drive?</label>
+          <div class="col-md-2">
+            <input id="testdrivecount" name="testdrivecount" type="number" step="1" max="10" min="0" placeholder="" class="form-control input-md">
+
+          </div>
+        </div>
+
+        <!-- Multiple Radios -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="testdriveuseful">Did the test drive help you decide on the car to purchase?</label>
+          <div class="col-md-4">
+            <div class="radio">
+              <label for="testdriveuseful-0">
+              <input type="radio" name="testdriveuseful" id="testdriveuseful-0" value="yes">
+              Yes
+            </label>
+            </div>
+            <div class="radio">
+              <label for="testdriveuseful-1">
+              <input type="radio" name="testdriveuseful" id="testdriveuseful-1" value="no">
+              No
+            </label>
+            </div>
+            <div class="radio">
+              <label for="testdriveuseful-2">
+              <input type="radio" name="testdriveuseful" id="testdriveuseful-2" value="maybe">
+              Maybe
+            </label>
+            </div>
+            <div class="radio">
+              <label for="testdriveuseful-2">
+              <input type="radio" checked="checked" name="testdriveuseful" id="testdriveuseful-2" value="na">
+              Not Applicable
+            </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Multiple Radios -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="agentrating">The sales agent was helpful, efficient, and professional.</label>
+          <div class="col-md-4">
+            <div class="radio">
+              <label for="agentrating-0">
+              <input type="radio" name="agentrating" id="agentrating-0" value="5" checked="checked">
+              Agree
+            </label>
+            </div>
+            <div class="radio">
+              <label for="agentrating-1">
+              <input type="radio" name="agentrating" id="agentrating-1" value="4">
+              Somewhat Agree
+            </label>
+            </div>
+            <div class="radio">
+              <label for="agentrating-2">
+              <input type="radio" name="agentrating" id="agentrating-2" value="3">
+              Neutral
+            </label>
+            </div>
+            <div class="radio">
+              <label for="agentrating-3">
+              <input type="radio" name="agentrating" id="agentrating-3" value="2">
+              Somewhat Disagree
+            </label>
+            </div>
+            <div class="radio">
+              <label for="agentrating-4">
+              <input type="radio" name="agentrating" id="agentrating-4" value="1">
+              Disagree
+            </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Multiple Radios -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="financerating">The finance officer was helpful, efficient, and professional.</label>
+          <div class="col-md-4">
+            <div class="radio">
+              <label for="financerating-0">
+              <input type="radio" name="financerating" id="financerating-0" value="5" checked="checked">
+              Agree
+            </label>
+            </div>
+            <div class="radio">
+              <label for="financerating-1">
+              <input type="radio" name="financerating" id="financerating-1" value="4">
+              Somewhat Agree
+            </label>
+            </div>
+            <div class="radio">
+              <label for="financerating-2">
+              <input type="radio" name="financerating" id="financerating-2" value="3">
+              Neutral
+            </label>
+            </div>
+            <div class="radio">
+              <label for="financerating-3">
+              <input type="radio" name="financerating" id="financerating-3" value="2">
+              Somewhat Disagree
+            </label>
+            </div>
+            <div class="radio">
+              <label for="financerating-4">
+              <input type="radio" name="financerating" id="financerating-4" value="1">
+              Disagree
+            </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Multiple Radios (inline) -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="shopagain">Would you return to our dealership again?</label>
+          <div class="col-md-4">
+            <label class="radio-inline" for="shopagain-0">
+              <input type="radio" name="shopagain" id="shopagain-0" value="yes" checked="checked">
+              Yes
+            </label>
+            <label class="radio-inline" for="shopagain-1">
+              <input type="radio" name="shopagain" id="shopagain-1" value="no">
+              No
+            </label>
+          </div>
+        </div>
+
+        <!-- Button (Double) -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="submit"></label>
+          <div class="col-md-8">
+            <button id="submit" name="submit" class="btn btn-success">Submit Feedback</button>
+            <button id="reset" name="reset" class="btn btn-warning">Reset Form</button>
+          </div>
+        </div>
+
+      </fieldset>
+    </form>
+
+  </div>
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+</body>
+
+</html>

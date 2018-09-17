@@ -1,0 +1,71 @@
+// Variables
+@font-family-main: "Nova Flat",
+"cursive";
+@font-family-form: "Roboto",
+"sans-serif";
+@background-main: #000;
+@background-form: #FFF;
+@brand-red: #9e1b32;
+// Variable calculations
+@line-height-form: 1*1.17em;
+// Color calculations
+// @background-color-lighter:  TODO
+// Color functions
+@background-lighter: lighten(#000, 80%);
+@button-contrast: contrast(@brand-red);
+// Mixins
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+// Parametric Mixins
+._linear-gradient-prefixes(@deg, @start, @middle, @end) {
+    background-image: -webkit-linear-gradient(@deg, @start, @middle, @end);
+    background-image: -moz-linear-gradient(@deg, @start, @middle, @end);
+    background-image: -o-linear-gradient(@deg, @start, @middle, @end);
+    background-image: -ms-linear-gradient(@deg, @start, @middle, @end);
+}
+
+body {
+    font-family: @font-family-main;
+    padding: 0em 3em;
+    ._linear-gradient-prefixes(90deg, @background-main, @background-lighter, @background-main);
+}
+
+form {
+    background-color: @background-form;
+    padding: 1em;
+    font-family: @font-family-form;
+    line-height: @line-height-form;
+    button {
+        padding: 1em;
+        cursor: pointer;
+        background-color: @brand-red;
+        color: @button-contrast;
+    }
+    legend {
+        font-size: 2em;
+        .form-group();
+    }
+    input {
+        cursor: pointer;
+    }
+    .form-group {
+        margin-bottom: 1em;
+    }
+    #testdrivecount {
+        padding: 8px 4px;
+        cursor: text;
+    }
+}
+
+img {
+    .center();
+}
+
+h1 {
+    color: @background-form;
+    text-align: center;
+}
