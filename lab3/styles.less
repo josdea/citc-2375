@@ -8,10 +8,8 @@
 @brand-red: #9e1b32;
 // Variable calculations
 @line-height-form: 1*1.17em;
-// Color calculations
-// @background-color-lighter:  TODO
-// Color functions
-@background-lighter: lighten(#000, 80%);
+// Colors
+@background-lighter: lighten(#000, 8*10%);
 @button-contrast: contrast(@brand-red);
 // Mixins
 .center {
@@ -19,7 +17,6 @@
     margin-left: auto;
     margin-right: auto;
 }
-
 // Parametric Mixins
 ._linear-gradient-prefixes(@deg, @start, @middle, @end) {
     background-image: -webkit-linear-gradient(@deg, @start, @middle, @end);
