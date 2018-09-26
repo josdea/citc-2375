@@ -13,11 +13,7 @@
   <title>Adepto</title>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <style>
-    /*
- * Globals
- */
-
-/* Links */
+    /* Links */
 a,
 a:focus,
 a:hover {
@@ -29,12 +25,9 @@ a:hover {
 .btn-secondary,
 .btn-secondary:hover,
 .btn-secondary:focus {
-  /* color: white; */
- /* text-shadow: none;  Prevent inheritance from `body` */
   background-color: #DF427C;
   border: .05rem solid #CB205F;
 }
-
 
 /*
  * Base structure
@@ -119,7 +112,7 @@ body {
 
 <body class="text-center">
 
-  <div id="app" class="cover-container d-flex h-100 p-4 mx-auto flex-column">
+  <div id="app" class="cover-container d-flex h-100 p-2 mx-auto flex-column">
     <header class="masthead mb-auto">
       <div class="inner">
         <h3 class="masthead-brand">Adepto</h3>
@@ -135,12 +128,11 @@ body {
 
     <main role="main" class="inner cover">
 
-
       <!-- SPLASH SCREEN -->
-
       <div id="splash" v-if="currentaction == 'splash'">
         <h1 class="cover-heading">Assess <i class="fas fa-chalkboard fa-xs"></i><br> Track <i class="fas fa-chart-line fa-xs"></i><br>
           Report <i class="far fa-chart-bar fa-xs"></i></h1>
+          <img class="mx-auto w-50" src="./assets/demo.gif" alt="sliding screens of various multiplcation facts">
         <p class="lead">Formative Assessment Done Right!</p>
         <p class="lead">
           <a href="#" class="btn btn-lg btn-secondary" v-on:click="currentaction = 'login'">Get Started</a>
@@ -154,26 +146,22 @@ body {
           <h3 class="">Login</h3>
           <br>
           <label for="inputEmail" class="sr-only">Email address</label>
-          <input type="email" id="inputEmail" class="form-control mx-auto w-50" placeholder="Email address" required autofocus>
+          <input type="email" id="inputEmail" class="form-control mx-auto w-50" placeholder="Email address" required
+            autofocus>
           <br>
           <label for="inputPassword" class="sr-only">Password</label>
           <input type="password" id="inputPassword" class="form-control mx-auto w-50" placeholder="Password" required>
-          <!-- <div class="checkbox mb-3">
-          <label>
-            <input type="checkbox" value="remember-me"> Remember me
-          </label>
-        </div> -->
           <br>
           <button class="btn btn-md btn-secondary" type="submit">Sign in</button>
+          <br>
           <p>Don't have an account? <a href="#" v-on:click="currentaction = 'signup'">Sign up</a></p>
         </form>
       </div>
 
       <!-- SIGN UP SCREEN -->
-      
       <div id="signup" v-if="currentaction == 'signup'">
-          <h4>Sign Up</h4>
-          <br>
+        <h4>Sign Up</h4>
+        <br>
         <form>
           <div class="form-group row">
             <label class="col-form-label sr-only" for="email">Email</label>
@@ -211,37 +199,30 @@ body {
             </div>
           </div>
         </form>
-
       </div>
 
-      <!-- Large modal -->
-      <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal</button>
-
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-        <h4>Why Adepto?</h4>
-        <p>Formative assessment is Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam impedit dolorem rem enim aspernatur libero possimus, porro eum suscipit veniam nulla facere, dolorum repellat ullam debitis? Labore at cum reiciendis?</p>
-    
-    </div>
-  </div>
-</div> -->
-
-
+      <!-- ABOUT SCREEN -->
       <div id="about" class="mx-auto w-75" v-if="currentaction == 'about'">
-
         <h3>Why Adepto?</h3>
-     <p>
-        In the classroom we can classify assessments into two main categories.  There are formative assessments and summative assessments.  Summative assessments take the form of exams, testing, final projects or papers.  Summative assessments are easily recognized because they are usually given a grade.  Formative assessments are recognizable because they are not given a grade and are used as assessments for learning.  Formative assessments allow an instructor to gauge the ability of the student, but the results are used to modify future lessons and curriculum (O’Malley and Pierce 1996).
-     </p>  
-     <p>This assessment tool allows for continuous assessment for instruction.  Assess students each day on their areas of struggle and track their progress.  Use the tool as an exit ticket on their way out the door or while waiting in the hallways.</p>
-       <cite>O’Malley, J. M. & Valdez Pierce, L. (1996). Authentic assessment for English language
-          learners: Practical approaches for teachers.  New York: Pearson Longman.
-          </cite>
+        <p>
+          In the classroom we can classify assessments into two main categories. There are formative assessments and
+          summative assessments. Summative assessments take the form of exams, testing, final projects or papers.
+          Summative assessments are easily recognized because they are usually given a grade. Formative assessments are
+          recognizable because they are not given a grade and are used as assessments for learning. Formative
+          assessments allow an instructor to gauge the ability of the student, but the results are used to modify
+          future lessons and curriculum (O’Malley and Pierce 1996).
+        </p>
+        <p>This assessment tool allows for continuous assessment for instruction. Assess students each day on their
+          areas of struggle and track their progress. Use the tool as an exit ticket on their way out the door or while
+          waiting in the hallways.</p>
+        <cite>O’Malley, J. M. & Valdez Pierce, L. (1996). Authentic assessment for English language
+          learners: Practical approaches for teachers. New York: Pearson Longman.
+        </cite>
         <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
       </div>
     </main>
 
+    <!-- FOOTER -->
     <footer class="mastfoot mt-auto">
       <div class="inner">
         <hr>
@@ -250,7 +231,6 @@ body {
     </footer>
   </div>
 
-  <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
     crossorigin="anonymous"></script>
