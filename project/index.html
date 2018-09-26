@@ -115,13 +115,13 @@ body {
   <div id="app" class="cover-container d-flex h-100 p-2 mx-auto flex-column">
     <header class="masthead mb-auto">
       <div class="inner">
-        <h3 class="masthead-brand">Adepto</h3>
+          <a href="./index.html"><h3 class="masthead-brand">Adepto</h3></a>
         <nav class="nav nav-masthead justify-content-center">
-          <a class="nav-link" v-bind:class="{ active: currentaction =='splash' }" href="#" v-on:click="currentaction = 'splash'">Home</a>
-          <a class="nav-link" v-bind:class="{ active: currentaction =='login' }" href="#" v-on:click="currentaction = 'login'">Login</a>
-          <a class="nav-link" v-bind:class="{ active: currentaction =='signup' }" href="#" v-on:click="currentaction = 'signup'">Sign
+          <a class="nav-link" v-bind:class="{ active: currentaction ==actions[0] }" href="#" v-on:click="currentaction = actions[0]">Home</a>
+          <a class="nav-link" v-bind:class="{ active: currentaction ==actions[1] }" href="#" v-on:click="currentaction = actions[1]">Login</a>
+          <a class="nav-link" v-bind:class="{ active: currentaction ==actions[2] }" href="#" v-on:click="currentaction = actions[2]">Sign
             Up</a>
-          <a class="nav-link" v-bind:class="{ active: currentaction =='about' }" href="#" v-on:click="currentaction = 'about'">About</a>
+          <a class="nav-link" v-bind:class="{ active: currentaction ==actions[3] }" href="#" v-on:click="currentaction = actions[3]">About</a>
         </nav>
       </div>
     </header>
@@ -129,18 +129,18 @@ body {
     <main role="main" class="inner cover">
 
       <!-- SPLASH SCREEN -->
-      <div id="splash" v-if="currentaction == 'splash'">
-        <h1 class="cover-heading">Assess <i class="fas fa-chalkboard fa-xs"></i><br> Track <i class="fas fa-chart-line fa-xs"></i><br>
+      <div id="splash" v-if="currentaction == actions[0]">
+        <h1 class="cover-heading">Assess <i class="fas fa-angle-double-right fa-xs"></i><br> Track <i class="fas fa-chart-line fa-xs"></i><br>
           Report <i class="far fa-chart-bar fa-xs"></i></h1>
           <img class="mx-auto w-50" src="./assets/demo.gif" alt="sliding screens of various multiplcation facts">
         <p class="lead">Formative Assessment Done Right!</p>
         <p class="lead">
-          <a href="#" class="btn btn-lg btn-secondary" v-on:click="currentaction = 'login'">Get Started</a>
+          <a href="#" class="btn btn-lg btn-secondary" v-on:click="currentaction = actions[1]">Get Started</a>
         </p>
       </div>
 
       <!-- LOGIN SCREEN -->
-      <div id="login" v-if="currentaction == 'login'">
+      <div id="login" v-if="currentaction == actions[1]">
         <form class="form-signin">
           <!-- <img class="mb-4" src="../../assets/brand/bootstrap-solid.svg" alt="" width="72" height="72"> -->
           <h3 class="">Login</h3>
@@ -154,12 +154,12 @@ body {
           <br>
           <button class="btn btn-md btn-secondary" type="submit">Sign in</button>
           <br>
-          <p>Don't have an account? <a href="#" v-on:click="currentaction = 'signup'">Sign up</a></p>
+          <p>Don't have an account? <a href="#" v-on:click="currentaction = actions[2]">Sign up</a></p>
         </form>
       </div>
 
       <!-- SIGN UP SCREEN -->
-      <div id="signup" v-if="currentaction == 'signup'">
+      <div id="signup" v-if="currentaction == actions[2]">
         <h4>Sign Up</h4>
         <br>
         <form>
@@ -202,7 +202,7 @@ body {
       </div>
 
       <!-- ABOUT SCREEN -->
-      <div id="about" class="mx-auto w-75" v-if="currentaction == 'about'">
+      <div id="about" class="mx-auto w-75" v-if="currentaction == actions[3]">
         <h3>Why Adepto?</h3>
         <p>
           In the classroom we can classify assessments into two main categories. There are formative assessments and
@@ -218,7 +218,6 @@ body {
         <cite>O’Malley, J. M. & Valdez Pierce, L. (1996). Authentic assessment for English language
           learners: Practical approaches for teachers. New York: Pearson Longman.
         </cite>
-        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
       </div>
     </main>
 
@@ -244,10 +243,8 @@ body {
     var app = new Vue({
       el: '#app',
       data: {
-        message: 'Hello Vue!',
         actions: ['splash', 'login', 'signup', 'about'],
         currentaction: 'splash'
-
       }
     })
 
