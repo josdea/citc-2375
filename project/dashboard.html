@@ -193,7 +193,8 @@
             color: #CB205F
         }
 
-        .card:hover {
+        .card:hover,
+        .list-group-item:hover {
             /* background-color:   #C9B6F0; */
             /* border-width: 5px; */
             border-color: #4E279F;
@@ -207,10 +208,11 @@
     <div id="app" class="cover-container d-flex h-100 p-2 mx-auto flex-column">
         <header class="masthead mb-auto">
             <div class="inner">
-                <h3 class="masthead-brand">Adepto Dashboard</h3>
+                <h3 class="masthead-brand">{{title}} - {{subtitle}}</h3>
                 <nav class="nav nav-masthead justify-content-center">
-                    <a class="nav-link" href="#" v-if="currentaction != 'dashboard'" v-on:click="currentaction = 'dashboard'">Dashboard</a>
-                    <a class="nav-link" href="#" v-on:click="currentaction = 'login'">Logout</a>
+                    <a class="nav-link" href="#" v-if="currentaction != actions[0]" v-on:click="currentaction = actions[0]; subtitle='Dashboard'">Dashboard</a>
+                    <a class="nav-link" href="./index.html">Logout</a>
+                    <!-- todo logout -->
                 </nav>
             </div>
         </header>
@@ -218,11 +220,11 @@
         <main role="main" class="inner cover">
 
             <!-- DASHBOARD SCREEN -->
-            <div id="dashboard" v-if="currentaction == 'dashboard'">
+            <div id="dashboard" v-if="currentaction == actions[0]">
                 <div class="row">
 
                     <div class="col-md-6 col-lg-4">
-                        <div class="card my-2" v-on:click="currentaction = 'assess'">
+                        <div class="card my-2" v-on:click="currentaction = actions[1]; subtitle='Assess'">
                             <div class="card-body">
                                 <p class="card-text"> <i class="fas fa-angle-double-right fa-5x color-primary-4"></i></p>
                                 <h5 class="card-title">Assess</h5>
@@ -231,7 +233,7 @@
                     </div>
 
                     <div class="col-md-6 col-lg-4">
-                        <div class="card my-2">
+                        <div class="card my-2" v-on:click="currentaction = actions[2]; subtitle='Assessment Sets'">
                             <div class="card-body">
                                 <p class="card-text"> <i class="fas fa-tasks fa-5x color-complement-4"></i></p>
                                 <h5 class="card-title">Assessment Sets</h5>
@@ -240,7 +242,7 @@
                     </div>
 
                     <div class="col-md-6 col-lg-4">
-                        <div class="card my-2">
+                        <div class="card my-2" v-on:click="currentaction = actions[3]; subtitle='Assessment Items'">
                             <div class="card-body">
                                 <p class="card-text"> <i class="far fa-check-square fa-5x color-complement-3"></i></p>
                                 <h5 class="card-title">Assessment Items</h5>
@@ -249,7 +251,7 @@
                     </div>
 
                     <div class="col-md-6 col-lg-4">
-                        <div class="card my-2">
+                        <div class="card my-2" v-on:click="currentaction = actions[4]; subtitle='Groups'">
                             <div class="card-body">
                                 <p class="card-text"> <i class="fas fa-users fa-5x color-secondary-1-4"></i></p>
                                 <h5 class="card-title">Groups</h5>
@@ -258,16 +260,16 @@
                     </div>
 
                     <div class="col-md-6 col-lg-4">
-                        <div class="card my-2">
+                        <div class="card my-2" v-on:click="currentaction = actions[5]; subtitle='Learners'">
                             <div class="card-body">
                                 <p class="card-text"> <i class="fas fa-user fa-5x color-secondary-1-3"></i></p>
-                                <h5 class="card-title">Users</h5>
+                                <h5 class="card-title">Learners</h5>
                             </div>
                         </div>
                     </div>
 
                     <div class="col-md-6 col-lg-4">
-                        <div class="card my-2">
+                        <div class="card my-2" v-on:click="currentaction = actions[6]; subtitle='Reports'">
                             <div class="card-body">
                                 <p class="card-text"> <i class="far fa-chart-bar fa-5x color-secondary-2-3"></i></p>
                                 <h5 class="card-title">Reports</h5>
@@ -278,30 +280,90 @@
             </div>
 
             <!-- ASSESS SCREEN -->
-            <div id="dashboard" v-if="currentaction == 'assess'">
-                <div class="row">
-
-                    <div class="col-md-6">
-                        <div class="card my-2">
-                            <div class="card-body">
-                                <p class="card-text"> <i class="fas fa-angle-double-right fa-5x color-primary-4"></i></p>
-                                <h5 class="card-title">Assess Group</h5>
-                            </div>
+            <div id="dashboard" v-if="currentaction == actions[1]">
+                <div class="card-deck">
+                    <div class="card my-2">
+                        <div class="card-body">
+                            <p class="card-text"> <i class="fas fa-angle-double-right fa-5x color-primary-4"></i></p>
+                            <h5 class="card-title">Assess Group</h5>
                         </div>
                     </div>
 
-                    <div class="col-md-6">
-                        <div class="card my-2">
-                            <div class="card-body">
-                                <p class="card-text"> <i class="fas fa-angle-right fa-5x color-primary-4"></i></p>
-                                <h5 class="card-title">Assess Learner</h5>
-                            </div>
+                    <div class="card my-2">
+                        <div class="card-body">
+                            <p class="card-text"> <i class="fas fa-angle-right fa-5x color-primary-3"></i></p>
+                            <h5 class="card-title">Assess Learner</h5>
                         </div>
                     </div>
+
+                    <!-- <div class="card my-2" v-on:click="currentaction = actions[0]; subtitle='Dashboard'">
+                        <div class="card-body">
+                            <p class="card-text"> <i class="fas fa-arrow-alt-circle-left fa-5x color-secondary-2-1"></i></p>
+                            <h5 class="card-title">Back to Dashboard</h5>
+                        </div>
+                    </div> -->
 
                 </div>
             </div>
 
+            <!-- GROUP -->
+            <div id="groups" v-if="currentaction == actions[4]">
+                <div class="card-deck">
+                    <div class="card my-2">
+                        <div class="card-body">
+                            <p class="card-text"> <i class="fas fa-plus-circle fa-lg color-secondary-1-4"></i></p>
+                            <h5 class="card-title">Create Group</h5>
+                        </div>
+                    </div>
+
+                    <div class="card my-2">
+                        <div class="card-body">
+                            <p class="card-text"> <i class="fas fa-minus-circle fa-lg color-secondary-1-1"></i></p>
+                            <h5 class="card-title">Delete Group</h5>
+                        </div>
+                    </div>
+
+                </div>
+                
+                <ul class="list-group">
+                    <li class="list-group-item my-2 py-4 mx-auto w-75 text-left " v-for="group in groups" :key="group.id">{{group.name}}
+                        - {{group.description}}</li>
+                </ul>
+
+
+
+
+            </div>
+
+
+            <!-- ASESSMENT SETS -->
+            <div id="groups" v-if="currentaction == actions[2]">
+                <div class="card-deck">
+                    <div class="card my-2">
+                        <div class="card-body">
+                            <p class="card-text"> <i class="fas fa-plus-circle fa-lg color-complement-4"></i></p>
+                            <h5 class="card-title">Create Set</h5>
+                        </div>
+                    </div>
+
+                    <div class="card my-2">
+                        <div class="card-body">
+                            <p class="card-text"> <i class="fas fa-minus-circle fa-lg color-complement-1"></i></p>
+                            <h5 class="card-title">Delete Set</h5>
+                        </div>
+                    </div>
+
+          
+                </div> 
+                <ul class="list-group">
+                    <li class="list-group-item my-2 py-4 mx-auto w-75 text-left " v-for="set in sets" :key="set.id">{{set.name}}
+                        - {{set.description}}</li>
+                </ul>
+
+
+
+
+            </div>
 
 
         </main>
@@ -328,8 +390,48 @@
         var app = new Vue({
             el: '#app',
             data: {
-                actions: ['dashboard', 'sets', 'items', 'groups', 'users', 'reports'],
-                currentaction: 'dashboard'
+                title: 'Adepto',
+                subtitle: 'Dashboard',
+                actions: ['dashboard', 'assess', 'sets', 'items', 'groups', 'users', 'reports', 'assessgroup', 'assessuser'],
+                currentaction: 'dashboard',
+                samplesets: [
+                    { id: 1, name: 'Alphabet (Upper)', description: 'Uppercase alphabet letters' },
+                    { id: 2, name: 'Multiplicaton Facts', description: 'Unique times table facts from 0 to 10' },
+                    { id: 3, name: '1st 100 Fry Words', description: 'First 100 Fry sight reading words' }
+                ],
+                sets: [],
+                currentset: {},
+                samplegroups: [
+                    { id: 4, name: '2nd Grade', description: 'Mrs. Mills Sample Class 1' },
+                    { id: 5, name: '4th Grade', description: 'Mr. Dean\'s Sample Class 2' }
+                ],
+                groups: [],
+                currentgroup: {},
+                sampleusers: [
+                    { id: 6, first_name: 'Lisa', last_name: 'Dean', group_id: 4 },
+                    { id: 7, first_name: 'Julia', last_name: 'Eden', group_id: 4 },
+                    { id: 8, first_name: 'Micah', last_name: 'Christian', group_id: 4 },
+                    { id: 9, first_name: 'Stephanie', last_name: 'Nichols', group_id: 5 },
+                ],
+                users: [],
+                currentuser: {},
+                sampleitems: [
+                    { id: 10, item_number: 1, item: "a", assessment_set_id: 3 },
+                    { id: 11, item_number: 2, item: "about", assessment_set_id: 3 },
+                    { id: 12, item_number: 3, item: "all", assessment_set_id: 3 },
+                    { id: 13, item_number: 4, item: "an", assessment_set_id: 3 },
+                    { id: 14, item_number: 5, item: "and", assessment_set_id: 3 },
+                    { id: 15, item_number: 6, item: "are", assessment_set_id: 3 },
+                ],
+                items: [],
+                currentitem: {},
+
+            },
+            created: function () {
+               this.items = this.sampleitems;
+               this.groups = this.samplegroups;
+               this.sets = this.samplesets;
+
             }
         })
 
