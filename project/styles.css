@@ -1,0 +1,125 @@
+    /* Links */
+    a,
+    a:focus,
+    a:hover, .navbar-light .navbar-nav .nav-link{
+      color: #6641B1;
+      font-weight: 500px;
+    }
+    
+    /* Custom default button */
+    .btn,
+    .btn-primary,
+    .btn-primary:hover,
+    .btn-primary:focus {
+      background-color: #DF427C;
+      border: .05rem solid #CB205F;
+    }
+    
+     html,
+    body {
+        height: 100%;
+    }
+
+    body {
+        display: -ms-flexbox;
+        -ms-flex-pack: center;
+        -webkit-box-pack: center;
+        justify-content: center;
+    }
+
+    #splash * {
+        line-height: 4rem;
+    }
+
+    .color-primary-0 {
+        color: #ACEE64
+    }
+
+    /* Main Primary color */
+    .color-primary-1 {
+        color: #DAFBB7
+    }
+
+    .color-primary-2 {
+        color: #C1F589
+    }
+
+    .color-primary-3 {
+        color: #99E745
+    }
+
+    .color-primary-4 {
+        color: #7ED321
+    }
+
+    .color-secondary-1-0 {
+        color: #FFC06B
+    }
+
+    /* Main Secondary color (1) */
+    .color-secondary-1-1 {
+        color: #FFE1BA
+    }
+
+    .color-secondary-1-2 {
+        color: #FFCF8F
+    }
+
+    .color-secondary-1-3 {
+        color: #FFB24C
+    }
+
+    .color-secondary-1-4 {
+        color: #E99525
+    }
+
+    .color-secondary-2-0 {
+        color: #8260C8
+    }
+
+    /* Main Secondary color (2) */
+    .color-secondary-2-1 {
+        color: #C9B6F0
+    }
+
+    .color-secondary-2-2 {
+        color: #A386DE
+    }
+
+    .color-secondary-2-3 {
+        color: #6641B1
+    }
+
+    .color-secondary-2-4 {
+        color: #4E279F
+    }
+
+    .color-complement-0 {
+        color: #E96193
+    }
+
+    /* Main Complement color */
+    .color-complement-1 {
+        color: #F9B6CF
+    }
+
+    .color-complement-2 {
+        color: #F187AE
+    }
+
+    .color-complement-3 {
+        color: #DF427C
+    }
+
+    .color-complement-4 {
+        color: #CB205F
+    }
+
+    .card:hover,
+    .list-group-item:hover {
+        border-color: #4E279F;
+        cursor: pointer;
+    }
+    i{
+        padding: 0 .5em;
+    }

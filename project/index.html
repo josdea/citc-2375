@@ -12,100 +12,9 @@
     crossorigin="anonymous">
   <title>Adepto</title>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <link rel="stylesheet" type="text/css" href="styles.css">
   <style>
-    /* Links */
-a,
-a:focus,
-a:hover {
-  color: #6641B1;
-}
 
-/* Custom default button */
-.btn,
-.btn-secondary,
-.btn-secondary:hover,
-.btn-secondary:focus {
-  background-color: #DF427C;
-  border: .05rem solid #CB205F;
-}
-
-/*
- * Base structure
- */
-
-html,
-body {
-  height: 100%;
-}
-
-body {
-  display: -ms-flexbox;
-  -ms-flex-pack: center;
-  -webkit-box-pack: center;
-  justify-content: center;
-}
-
-.cover-container {
-  max-width: 60em;
-}
-
-
-/*
- * Header
- */
-.masthead {
-  margin-bottom: 2rem;
-}
-
-.masthead-brand {
-  margin-bottom: 0;
-}
-
-.nav-masthead .nav-link {
-  padding: .25rem 0;
-  font-weight: 700;
-  color: rgba(63.9, 52.5, 87.1);
-  background-color: transparent;
-  border-bottom: .25rem solid transparent;
-}
-
-.nav-masthead .nav-link:hover,
-.nav-masthead .nav-link:focus {
-  border-bottom-color: rgba(30.6, 15.3, 62.4);
-}
-
-.nav-masthead .nav-link + .nav-link {
-  margin-left: 1rem;
-}
-
-.nav-masthead .active {
-  color: rgba(30.6, 15.3, 62.4);
-  border-bottom-color: rgba(30.6, 15.3, 62.4);
-}
-
-@media (min-width: 80em) {
-  .masthead-brand {
-    float: left;
-  }
-  .nav-masthead {
-    float: right;
-  }
-}
-
-/*
- * Cover
- */
-.cover {
-  padding: 0 1.5rem;
-}
-.cover .btn-lg {
-  padding: .75rem 1.25rem;
-  font-weight: 700;
-}
-
-#splash *{
-  line-height: 1.5em;
-}
 
 </style>
 </head>
@@ -113,15 +22,29 @@ body {
 <body class="text-center">
 
   <div id="app" class="cover-container d-flex h-100 p-2 mx-auto flex-column">
+
+
     <header class="masthead mb-auto">
       <div class="inner">
-          <a href="./index.html"><h3 class="masthead-brand">Adepto</h3></a>
-        <nav class="nav nav-masthead justify-content-center">
-          <a class="nav-link" v-bind:class="{ active: currentaction ==actions[0] }" href="#" v-on:click="currentaction = actions[0]">Home</a>
-          <a class="nav-link" v-bind:class="{ active: currentaction ==actions[1] }" href="#" v-on:click="currentaction = actions[1]">Login</a>
-          <a class="nav-link" v-bind:class="{ active: currentaction ==actions[2] }" href="#" v-on:click="currentaction = actions[2]">Sign
-            Up</a>
-          <a class="nav-link" v-bind:class="{ active: currentaction ==actions[3] }" href="#" v-on:click="currentaction = actions[3]">About</a>
+        <nav class="navbar navbar-expand-md navbar-light">
+          <a class="navbar-brand" href="#" v-on:click="updateaction(actions[0])">Adepto</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse flex-grow-1" id="navbarNav">
+            <ul class="navbar-nav ml-auto flex-nowrap">
+              <li class="nav-item" v-bind:class="{ active: currentaction ==actions[1]}">
+                <a class="nav-link" href="#" v-on:click="updateaction(actions[1])">Login</a>
+              </li>
+              <li class="nav-item" v-bind:class="{ active: currentaction ==actions[2]}">
+                <a class="nav-link" href="#" v-on:click="updateaction(actions[2])">Sign Up</a>
+              </li>
+              <li class="nav-item" v-bind:class="{ active: currentaction ==actions[3]}">
+                <a class="nav-link" href="#" v-on:click="updateaction(actions[3])">About</a>
+              </li>
+            </ul>
+          </div>
         </nav>
       </div>
     </header>
@@ -132,10 +55,10 @@ body {
       <div id="splash" v-if="currentaction == actions[0]">
         <h1 class="cover-heading">Assess <i class="fas fa-angle-double-right fa-xs"></i><br> Track <i class="fas fa-chart-line fa-xs"></i><br>
           Report <i class="far fa-chart-bar fa-xs"></i></h1>
-          <img class="mx-auto w-50" src="./assets/demo.gif" alt="sliding screens of various multiplcation facts">
+        <img class="mx-auto w-50" src="./assets/demo.gif" alt="sliding screens of various multiplcation facts">
         <p class="lead">Formative Assessment Done Right!</p>
         <p class="lead">
-          <a href="#" class="btn btn-lg btn-secondary" v-on:click="currentaction = actions[1]">Get Started</a>
+          <a href="#" class="btn btn-lg btn-primary" v-on:click="updateaction(actions[1])">Get Started</a>
         </p>
       </div>
 
@@ -153,7 +76,7 @@ body {
           <br>
           <button class="btn btn-md btn-secondary" type="submit">Sign in</button>
           <br>
-          <p>Don't have an account? <a href="#" v-on:click="currentaction = actions[2]">Sign up</a></p>
+          <p>Don't have an account? <a href="#" v-on:click="updateaction(actions[2])">Sign up</a></p>
         </form>
       </div>
 
@@ -214,9 +137,9 @@ body {
         <p>This assessment tool allows for continuous assessment for instruction. Assess students each day on their
           areas of struggle and track their progress. Use the tool as an exit ticket on their way out the door or while
           waiting in the hallways.</p>
-        <cite>O’Malley, J. M. & Valdez Pierce, L. (1996). Authentic assessment for English language
+        <small><cite>O’Malley, J. M. & Valdez Pierce, L. (1996). Authentic assessment for English language
           learners: Practical approaches for teachers. New York: Pearson Longman.
-        </cite>
+        </cite></small>
       </div>
     </main>
 
@@ -244,6 +167,12 @@ body {
       data: {
         actions: ['splash', 'login', 'signup', 'about'],
         currentaction: 'splash'
+      },
+      methods: {
+        updateaction: function (action) {
+          $('.collapse').collapse("hide")
+          this.currentaction = action;
+        }
       }
     })
 
