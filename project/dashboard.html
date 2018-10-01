@@ -25,7 +25,8 @@
         <header class="masthead mb-auto">
             <div class="inner">
                 <nav class="navbar navbar-expand-sm navbar-light">
-                    <a class="navbar-brand" href="#" v-on:click="updateaction(actions[0])">{{title}} - {{subtitle}}</a>
+                    <a class="navbar-brand" href="#dashboard" v-on:click="updateaction(actions[0])">{{title}} -
+                        {{subtitle}}</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -33,7 +34,7 @@
                     <div class="collapse navbar-collapse flex-grow-1" id="navbarNav">
                         <ul class="navbar-nav ml-auto flex-nowrap nav-pills">
                             <li class="nav-item">
-                                <a class="nav-link" href="#" v-on:click="updateaction(actions[0])">{{actions[0]}}</a>
+                                <a class="nav-link" href="#dashboard" v-on:click="updateaction(actions[0])">{{actions[0]}}</a>
 
                             </li>
                             <li class="nav-item">
@@ -54,37 +55,34 @@
                     </ol>
                 </nav>
 
-                <!-- SETS NAV -->
-                <div id="setsnav" v-if="currentaction == actions[2]">
-                    <a href="#" v-on:click="updateaction(actions[9])">
-                        <i class="fas fa-plus-circle color-complement-4"></i>{{actions[9]}}</a>
-                    <a href="#" v-on:click="updateaction(actions[10])"> <i class="fas fa-minus-circle color-complement-1"></i>{{actions[10]}}</a>
-                </div>
+
 
                 <!-- GROUPS NAV -->
                 <div id="groupsnav" v-if="currentaction == actions[4]">
-                    <a href="#" v-on:click="updateaction(actions[11])">
+                    <a href="#creategroup" v-on:click="updateaction(actions[11])">
                         <i class="fas fa-plus-circle color-secondary-1-4"></i>{{actions[11]}}</a>
-                    <a href="#" v-on:click="updateaction(actions[12])"> <i class="fas fa-minus-circle color-secondary-1-1"></i>{{actions[12]}}</a>
+                    <a href="#deletegroup" v-on:click="updateaction(actions[12])"> <i class="fas fa-minus-circle color-secondary-1-1"></i>{{actions[12]}}</a>
                 </div>
 
             </div>
 
         </header>
 
-        <main role="main" class="inner  container">
+        <main role="main" class="inner container">
 
             <!-- DASHBOARD SCREEN -->
             <div id="dashboard" v-if="currentaction == actions[0]">
                 <div class="row">
 
                     <div class="col-md-6 col-lg-4">
-                        <div class="card my-2" v-on:click="updateaction(actions[1])">
+                        <button type="button" class="btn btn-lg my-2 btn-nav" v-on:click="updateaction(actions[1])"><i
+                                class="fas fa-angle-double-right fa-5x color-primary-4"></i> <br>{{actions[1]}}</button>
+                        <!-- <div class="card my-2" v-on:click="updateaction(actions[1])">
                             <div class="card-body">
                                 <p class="card-text"> <i class="fas fa-angle-double-right fa-5x color-primary-4"></i></p>
                                 <h5 class="card-title">{{actions[1]}}</h5>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
 
                     <div class="col-md-6 col-lg-4">
@@ -203,10 +201,15 @@
             </div>
 
 
-            <!-- ASESSMENT SETS SCREEN-->
-            <div id="sets" v-if="currentaction == actions[2]">
+            <!-- ASSESSMENT SETS SCREEN-->
+            <div id="assessmentsets" v-if="currentaction == actions[2]">
+               <h4 v-if="currentset !== 0">{{currentset.name}} <br><small>{{currentset.description}}</small></h4>
                 <ul class="list-group">
-                    <li class="list-group-item my-2 py-4 mx-auto w-75 text-left " v-for="set in sets" :key="set.id">{{set.name}}
+                        <li class="list-group-item my-2 py-4 mx-auto w-100 text-left" v-if="currentset === 0"><i class="fas fa-plus-circle color-complement-4"></i> Create Assessment Set</li>
+                        <li class="list-group-item my-2 py-4 mx-auto w-100 text-left " v-if="currentset !== 0 && currentaction == actions[2]"><i class="far fa-edit color-complement-3"></i>Edit / Rename Assessment Set</li>
+                        <li class="list-group-item my-2 py-4 mx-auto w-100 text-left " v-if="currentset !== 0 && currentaction == actions[2]"><i class="far fa-chart-bar color-secondary-2-3"></i>Assessment Set Report</li>
+                        <li class="list-group-item my-2 py-4 mx-auto w-100 text-left " v-if="currentset !== 0 && currentaction == actions[2]"><i class="fas fa-minus-circle color-complement-1"></i> Delete Assessment Set</li>
+                    <li class="list-group-item my-2 py-4 mx-auto w-100 text-left " v-for="set in sets" :key="set.id" v-on:click="setcurrentset(set)" v-if="currentset === 0">{{set.name}}
                         - {{set.description}}</li>
                 </ul>
             </div>
@@ -214,8 +217,13 @@
 
             <!-- ASESSMENT ITEMS SCREEN-->
             <div id="items" v-if="currentaction == actions[3]">
+                    <h4 v-if="currentitem !== 0">{{currentitem.item}}</h4>
                 <ul class="list-group">
-                    <li class="list-group-item my-2 py-4 mx-auto w-75 text-left " v-for="item in items" :key="item.id">{{item.item_number}}.
+                        <li class="list-group-item my-2 py-4 mx-auto w-100 text-left" v-if="currentitem === 0"><i class="fas fa-plus-circle color-complement-4"></i> Create Assessment Item</li>
+                        <li class="list-group-item my-2 py-4 mx-auto w-100 text-left " v-if="currentitem !== 0 && currentaction == actions[3]"><i class="far fa-edit color-complement-3"></i>Edit Assessment Item</li>
+                        <li class="list-group-item my-2 py-4 mx-auto w-100 text-left " v-if="currentitem !== 0 && currentaction == actions[3]"><i class="far fa-chart-bar color-secondary-2-3"></i>Assessment Item Report</li>
+                        <li class="list-group-item my-2 py-4 mx-auto w-100 text-left " v-if="currentitem !== 0 && currentaction == actions[3]"><i class="fas fa-minus-circle color-complement-1"></i> Delete Assessment Item</li>
+                    <li class="list-group-item my-2 py-4 mx-auto w-100 text-left " v-for="item in items" :key="item.id" v-on:click="setcurrentitem(item)" v-if="currentitem === 0">{{item.item_number}}.
                         {{item.item}}
                     </li>
                 </ul>
@@ -233,46 +241,46 @@
             </div>
 
             <!-- ASSESSMENT SETTINGS SCREEN -->
-<!-- todo fix mobile version of this form -->
+            <!-- todo fix mobile version of this form -->
             <div id="prepareassessment" v-if="currentaction == actions[13]">
-                <form action="assess.php"
-                method="post"
-                id="assessmentsettings">
+                <form action="assess.php" method="post" id="assessmentsettings">
                     <div class="form-group row ">
                         <label class="col-sm-6 col-form-label">Settings</label>
-                        <div class="col-6 text-left">
+                        <div class="col text-left">
                             <div class="form-check">
                                 <label class="form-check-label">
-                                    <input name="settings" type="checkbox" v-model="assessmentsettings.random" aria-describedby="settingsHelpBlock"
-                                        class="form-check-input" value="random">
+                                    <input name="settings" type="checkbox" v-model="assessmentsettings.random"
+                                        aria-describedby="settingsHelpBlock" class="form-check-input" value="random">
                                     Randomize Item Order
                                 </label>
                             </div>
                             <div class="form-check">
                                 <label class="form-check-label">
-                                    <input name="settings" type="checkbox" v-model="assessmentsettings.timed" aria-describedby="settingsHelpBlock"
-                                        class="form-check-input" value="timed">
+                                    <input name="settings" type="checkbox" v-model="assessmentsettings.timed"
+                                        aria-describedby="settingsHelpBlock" class="form-check-input" value="timed">
                                     Item Goal Time
                                 </label>
                             </div>
                             <div class="form-check">
                                 <label class="form-check-label">
-                                    <input name="settings" type="checkbox" v-model="assessmentsettings.autoadvance" aria-describedby="settingsHelpBlock"
-                                        class="form-check-input" value="autoadvance" :disabled="!assessmentsettings.timed">
-                                    Auto Advance <small><span class="text-danger" v-if="!assessmentsettings.timed">(Item Goal Time Required for this setting)</span></small>
+                                    <input name="settings" type="checkbox" v-model="assessmentsettings.autoadvance"
+                                        aria-describedby="settingsHelpBlock" class="form-check-input" value="autoadvance"
+                                        :disabled="!assessmentsettings.timed">
+                                    Auto Advance <small><span class="text-danger" v-if="!assessmentsettings.timed">(Item
+                                            Goal Time Required for this setting)</span></small>
                                 </label>
                             </div>
                             <div class="form-check">
                                 <label class="form-check-label">
-                                    <input name="settings" type="checkbox" v-model="assessmentsettings.countfilter" aria-describedby="settingsHelpBlock"
-                                        class="form-check-input" value="countfilter">
+                                    <input name="settings" type="checkbox" v-model="assessmentsettings.countfilter"
+                                        aria-describedby="settingsHelpBlock" class="form-check-input" value="countfilter">
                                     Filter by Previous Answer Counts
                                 </label>
                             </div>
                             <div class="form-check">
                                 <label class="form-check-label">
-                                    <input name="settings" type="checkbox" v-model="assessmentsettings.itemlimit" aria-describedby="settingsHelpBlock"
-                                        class="form-check-input" value="itemlimit">
+                                    <input name="settings" type="checkbox" v-model="assessmentsettings.itemlimit"
+                                        aria-describedby="settingsHelpBlock" class="form-check-input" value="itemlimit">
                                     Limit Assessment Items
                                 </label>
                             </div>
@@ -281,11 +289,11 @@
                     </div>
 
                     <div class="form-group row" v-if="assessmentsettings.timed">
-                        <label for="answertime" class="col-6 col-form-label">Desired Answer Time</label>
-                        <div class="col-4">
+                        <label for="answertime" class="col-sm-6 col-form-label">Desired Answer Time</label>
+                        <div class="col-sm-4">
                             <div class="input-group">
-                                <input id="answertime" name="answertime" type="number" step="1" min="0" max="60" value="3" aria-describedby="answertimeHelpBlock"
-                                    class="form-control here">
+                                <input id="answertime" name="answertime" type="number" step="1" min="0" max="60" value="3"
+                                    aria-describedby="answertimeHelpBlock" class="form-control here">
                                 <div class="input-group-append"><span class="input-group-text">Seconds</span></div>
                             </div>
                             <span id="answertimeHelpBlock" class="form-text text-muted">The number of seconds desired
@@ -294,11 +302,11 @@
                     </div>
 
                     <div class="form-group row" v-if="assessmentsettings.countfilter">
-                        <label for="assessmentcount" class="col-6 col-form-label">Answer Count Filter</label>
-                        <div class="col-4">
+                        <label for="assessmentcount" class="col-sm-6 col-form-label">Answer Count Filter</label>
+                        <div class="col-sm-4">
                             <div class="input-group">
-                                <input id="assessmentcount" name="assessmentcount" type="number" step="1" min="0" max="10" value="3"
-                                    aria-describedby="assessmentcountHelpBlock" required="required" class="form-control here">
+                                <input id="assessmentcount" name="assessmentcount" type="number" step="1" min="0" max="10"
+                                    value="3" aria-describedby="assessmentcountHelpBlock" required="required" class="form-control here">
                                 <div class="input-group-append"><span class="input-group-text">Count</span></div>
                             </div>
                             <span id="assessmentcountHelpBlock" class="form-text text-muted">Only show items that have
@@ -306,20 +314,20 @@
                         </div>
                     </div>
                     <div class="form-group row" v-if="assessmentsettings.itemlimit">
-                        <label for="text" class="col-6 col-form-label">Item Limit</label>
-                        <div class="col-4">
+                        <label for="text" class="col-sm-6 col-form-label">Item Limit</label>
+                        <div class="col-sm-4">
                             <div class="input-group">
-                                <input id="text" name="text" type="number" step="1" min="0" max="100" value="10" aria-describedby="textHelpBlock"
-                                    class="form-control here">
+                                <input id="text" name="text" type="number" step="1" min="0" max="100" value="10"
+                                    aria-describedby="textHelpBlock" class="form-control here">
                                 <div class="input-group-append"><span class="input-group-text">Items</span></div>
                             </div>
                             <span id="textHelpBlock" class="form-text text-muted">Limit the total items in this
                                 assessment</span>
                         </div>
                     </div>
-                    
+
                     <div class="form-group row">
-                        <div class="offset-6 col-6">
+                        <div class="offset-3 col-6">
                             <button name="submit" type="submit" class="btn btn-primary">Begin Assessment</button>
                         </div>
                     </div>
@@ -390,7 +398,7 @@
                 ],
                 items: [],
                 currentitem: 0,
-                assessmentsettings: {random: true, timed: true, autoadvance: true, countfilter: true, itemlimit: true}
+                assessmentsettings: { random: true, timed: true, autoadvance: true, countfilter: true, itemlimit: true }
             },
             created: function () {
                 this.items = this.sampleitems;
@@ -405,9 +413,9 @@
                     this.currentaction = action;
                     this.subtitle = action;
                     console.log(this.currentaction);
-                   if(this.currentaction !== this.actions[13]){
+                    if (this.currentaction !== this.actions[13]) {
                         this.resetcurrents();
-                        }
+                    }
                 },
                 setcurrentuser: function (user) {
                     this.currentuser = user;
@@ -421,13 +429,20 @@
                     this.currentset = set;
                     console.log(this.currentset.name);
                 },
+                setcurrentitem: function (item) {
+                    this.currentitem = item;
+                    console.log(this.currentitem.item);
+                },
                 resetcurrents: function () {
                     this.currentgroup = this.currentitem = this.currentset = this.currentuser = 0;
                 }
             }
         })
 
+
+
     </script>
+
 </body>
 
 </html>
