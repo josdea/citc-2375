@@ -1,0 +1,338 @@
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous">
+  <script src="https://unpkg.com/vue@2.4.2"></script>
+
+  <style>
+    .btn{
+    /* width: 100%; */
+    font-size: 1.3em;
+    padding: 1.2em;
+  }
+
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+    <h1>a title</h1>
+    <hr>
+    <div class="container-fluid">
+      Letter: {{currentletter}}
+      <div class="row">
+
+        <div class="col-4" v-for="(letter, key) in letters">
+          <button type="button" class="btn btn-outline-primary btn-lg w-100 my-1 text-center" v-bind:class="{ disabled: letter === 0 }"
+            :aria-disabled="letter == 0" v-on:click="currentletter = key" v-if="letter > 0">{{key.toUpperCase()}} <span
+              class="badge badge-primary float-right mt-2 d-none d-sm-block" v-if="letter !== 0">{{letter}}</span></button>
+        </div>
+      </div>
+
+      <div id="names">
+        <ol>
+          <li v-for="name in namelist" v-if="name.first_name.charAt(0).toLowerCase() == currentletter">
+            {{name.first_name}} {{name.last_name.charAt(0)}}.
+          </li>
+        </ol>
+      </div>
+
+    </div>
+
+
+
+  </div>
+
+
+
+  <script>
+
+    var names = [
+      {
+        "first_name": "Roger",
+        "last_name": "Kropf",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Lavern",
+        "last_name": "Hagins",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Kurt",
+        "last_name": "Costa",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Eleonor",
+        "last_name": "Henninger",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Alyse",
+        "last_name": "Curl",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Kimberli",
+        "last_name": "Laguna",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Mikel",
+        "last_name": "Rosenbaum",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Elke",
+        "last_name": "Nunn",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Senaida",
+        "last_name": "Daley",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Marquerite",
+        "last_name": "Hathorn",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Abbie",
+        "last_name": "Tokarz",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Ronni",
+        "last_name": "Ormand",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Maryln",
+        "last_name": "Weld",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Esta",
+        "last_name": "Heaston",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Kathline",
+        "last_name": "Mccuen",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Maricela",
+        "last_name": "Woodfin",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Nelda",
+        "last_name": "Tindell",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Lorean",
+        "last_name": "Lasiter",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Hai",
+        "last_name": "Klingler",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Inell",
+        "last_name": "Hites",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Maurita",
+        "last_name": "Ishee",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Lamar",
+        "last_name": "Hulet",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Elene",
+        "last_name": "Hargraves",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Palmira",
+        "last_name": "Leven",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Kindra",
+        "last_name": "Gasser",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Leida",
+        "last_name": "Kirkendall",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Nestor",
+        "last_name": "Mcnatt",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Claretta",
+        "last_name": "Hemsley",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Fawn",
+        "last_name": "Medford",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Sammy",
+        "last_name": "Waage",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Elois",
+        "last_name": "Mallow",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Heidy",
+        "last_name": "Juares",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Adela",
+        "last_name": "Padron",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Refugio",
+        "last_name": "Boer",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Michiko",
+        "last_name": "Montz",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Brunilda",
+        "last_name": "Corlett",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Anja",
+        "last_name": "Magdaleno",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Delmy",
+        "last_name": "Schug",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Clarice",
+        "last_name": "Peranio",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Thea",
+        "last_name": "Gibbon",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Kenyetta",
+        "last_name": "Massengale",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Santana",
+        "last_name": "Couey",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Sandi",
+        "last_name": "Ballengee",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Lilliam",
+        "last_name": "Erhardt",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Alva",
+        "last_name": "Pfannenstiel",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Grant",
+        "last_name": "Levering",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Madelene",
+        "last_name": "Cushman",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Antonetta",
+        "last_name": "Sparkman",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Dagny",
+        "last_name": "Milot",
+        "FIELD3": " "
+      },
+      {
+        "first_name": "Norris",
+        "last_name": "Olney",
+        "FIELD3": " "
+      }
+    ];
+
+    function genCharArray(charA, charZ) {
+      var i = charA.charCodeAt(0), j = charZ.charCodeAt(0), b = {};
+      for (; i <= j; ++i) {
+        b[String.fromCharCode(i)] = 0;
+      }
+      return b;
+    }
+    var lettercounts = genCharArray('a', 'z');
+
+    names.forEach(function (name) {
+      lettercounts[name.first_name.charAt(0).toLowerCase()] += 1;
+    });
+
+
+    var app = new Vue({
+      el: "#app",
+      data: {
+        message: "Hello Vue!",
+        namelist: names,
+        letters: lettercounts,
+        currentletter: ''
+      },
+      computed: {
+        filterbycurrentletter: function () {
+          let temparray = [];
+
+        }
+      }
+    });
+  </script>
+
+</body>
+
+</html>
