@@ -61,8 +61,6 @@
                         <li class="breadcrumb-item" v-if="currentaction === actions[8] || currentaction === actions[13]"><a
                                 href="#Assess Learner" v-on:click="updateaction(actions[8])">{{actions[8]}}</a></li>
 
-                        <!-- <li class="breadcrumb-item" v-bind:class="{ active: currentaction == actions[0]}"><a href="#" v-on:click="updateaction(actions[0])">{{actions[0]}}</a></li> -->
-
                         <li class="breadcrumb-item" v-if="currentitem !== 0">{{currentitem.item.substr(0,20)}}...</li>
                         <li class="breadcrumb-item" v-if="currentgroup !== 0">{{currentgroup.name}}</li>
                         <li class="breadcrumb-item" v-if="currentuser !== 0">{{currentuser.first_name}}
@@ -79,68 +77,27 @@
             <!-- DASHBOARD SCREEN -->
             <div id="dashboard" v-if="currentaction == actions[0]">
                 <div class="row">
-
-                    <div class="col-md-6 col-lg-4">
-                        <button type="button" class="btn btn-lg my-2 btn-nav" v-on:click="updateaction(actions[1])"><i
-                                class="fas fa-angle-double-right fa-5x color-primary-4"></i> <br>{{actions[1]}}</button>
-                        <!-- <div class="card my-2" v-on:click="updateaction(actions[1])">
-                            <div class="card-body">
-                                <p class="card-text"> <i class="fas fa-angle-double-right fa-5x color-primary-4"></i></p>
-                                <h5 class="card-title">{{actions[1]}}</h5>
-                            </div>
-                        </div> -->
-                    </div>
-
-                    <div class="col-md-6 col-lg-4">
-                        <div class="card my-2" v-on:click="updateaction(actions[2])">
-                            <div class="card-body">
-                                <p class="card-text"> <i class="fas fa-tasks fa-5x color-complement-4"></i></p>
-                                <h5 class="card-title">{{actions[2]}}</h5>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-4">
-                        <div class="card my-2" v-on:click="updateaction(actions[3])">
-                            <div class="card-body">
-                                <p class="card-text"> <i class="far fa-check-square fa-5x color-complement-3"></i></p>
-                                <h5 class="card-title">{{actions[3]}}</h5>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-4">
-                        <div class="card my-2" v-on:click="updateaction(actions[4])">
-                            <div class="card-body">
-                                <p class="card-text"> <i class="fas fa-users fa-5x color-secondary-1-4"></i></p>
-                                <h5 class="card-title">{{actions[4]}}</h5>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-4">
-                        <div class="card my-2" v-on:click="updateaction(actions[5])">
-                            <div class="card-body">
-                                <p class="card-text"> <i class="fas fa-user fa-5x color-secondary-1-3"></i></p>
-                                <h5 class="card-title">Learners</h5>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-4">
-                        <div class="card my-2" v-on:click="updateaction(actions[6])">
-                            <div class="card-body">
-                                <p class="card-text"> <i class="far fa-chart-bar fa-5x color-secondary-2-3"></i></p>
-                                <h5 class="card-title">{{actions[6]}}</h5>
-                            </div>
-                        </div>
+                    <div class="col-md-6 col-lg-4" v-for="dbbutton in dashboardbuttons">
+                        <button type="button" class="btn btn-lg my-2 btn-nav" v-on:click="updateaction(actions[dbbutton.action])"><i
+                                :class="['fa-5x', dbbutton.icon, dbbutton.colorclass]"></i> <br>{{actions[dbbutton.action]}}</button>
                     </div>
                 </div>
             </div>
 
             <!-- ASSESS SCREEN -->
             <div id="assess" v-if="currentaction == actions[1]">
-                <div class="card-deck">
+
+                    <div class="row">
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-lg my-2 btn-nav" v-on:click="updateaction(actions[7])"><i class="fas fa-angle-double-right fa-5x color-primary-4"></i> <br>{{actions[7]}}</button>
+                            </div>
+                            <div class="col-md-6">
+                                    <button type="button" class="btn btn-lg my-2 btn-nav" v-on:click="updateaction(actions[8])"><i class="fas fa-angle-right fa-5x color-primary-3"></i> <br>{{actions[8]}}</button>
+                                </div>
+                        </div>
+
+
+                <!-- <div class="card-deck">
                     <div class="card my-2" v-on:click="updateaction(actions[7])">
                         <div class="card-body">
                             <p class="card-text"> <i class="fas fa-angle-double-right fa-5x color-primary-4"></i></p>
@@ -154,7 +111,7 @@
                             <h5 class="card-title">{{actions[8]}}</h5>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
 
             <!-- ASSESS GROUP  -->
@@ -399,15 +356,17 @@
 
             <!-- REPORTS SCREEN -->
             <div id="REPORTS" v-if="currentaction == actions[6]">
-                    <h4 v-if="currentuser !== 0">{{currentuser.first_name}} {{currentuser.last_name}}</h4>
-                    <div class="list-group">
-    
-                        <button type="button" class="list-group-item list-group-item-action my-2 py-4 mx-auto w-100 text-left"
-                            v-if="currentreport === 0" v-for="report in reports"><i :class="[report.icon, report.colorclass]"></i>
-                            {{report.name}}</button>
-                        
-                    </div>
+                <h4 v-if="currentreport !== 0">{{currentreport.name}}</h4>
+                <div class="list-group">
+
+                    <button type="button" class="list-group-item list-group-item-action my-2 py-4 mx-auto w-100 text-left"
+                        v-if="currentreport === 0" v-for="report in reports" v-on:click="setcurrentreport(report)"><i
+                            :class="[report.icon, report.colorclass]"></i>
+                        {{report.name}}</button>
                 </div>
+
+
+            </div>
 
         </main>
 
@@ -437,12 +396,43 @@
                 // subtitle: 'Dashboard',
                 actions: ['Dashboard', 'Assess', 'Assessment Sets', 'Assessment Items', 'Groups', 'Learners', 'Reports', 'Assess Group', 'Assess Learner', 'Create Set', 'Delete Set', 'Create Group', 'Delete Group', 'Assessment Settings'],
                 currentaction: 'Dashboard',
-                reports: ['', '', '', ''],
+                dashboardbuttons: [
+                    {
+                        action: 1,
+                        icon: "fas fa-angle-double-right",
+                        colorclass: "color-primary-4"
+                    },
+                    {
+                        action: 2,
+                        icon: "fas fa-tasks",
+                        colorclass: "color-complement-4"
+                    },
+                    {
+                        action: 3,
+                        icon: "far fa-check-square",
+                        colorclass: "color-complement-3"
+                    },
+                    {
+                        action: 4,
+                        icon: "fas fa-users",
+                        colorclass: "color-secondary-1-4"
+                    },
+                    {
+                        action: 5,
+                        icon: "fas fa-user",
+                        colorclass: "color-secondary-1-3"
+                    },
+                    {
+                        action: 4,
+                        icon: "far fa-chart-bar",
+                        colorclass: "color-secondary-2-3"
+                    }
+                ],
                 reports: [
-                    {name: 'Assessment Set Report', icon: 'fas fa-tasks', colorclass:'color-complement-4'},
-                    {name: 'Item Report', icon: 'far fa-check-square', colorclass:'color-complement-3'},
-                    {name: 'Group Report', icon: 'fas fa-users', colorclass:'color-secondary-1-4'},
-                    {name: 'Learner Report', icon: 'fas fa-user', colorclass:'color-secondary-1-3'},
+                    { name: 'Assessment Set Report', icon: 'fas fa-tasks', colorclass: 'color-complement-4' },
+                    { name: 'Item Report', icon: 'far fa-check-square', colorclass: 'color-complement-3' },
+                    { name: 'Group Report', icon: 'fas fa-users', colorclass: 'color-secondary-1-4' },
+                    { name: 'Learner Report', icon: 'fas fa-user', colorclass: 'color-secondary-1-3' },
                 ],
                 currentreport: 0,
                 // assessmentprepare: false,
@@ -516,6 +506,10 @@
                 setcurrentitem: function (item) {
                     this.currentitem = item;
                     console.log(this.currentitem.item);
+                },
+                setcurrentreport: function (report) {
+                    this.currentreport = report;
+                    console.log(this.currentreport.name);
                 },
                 resetcurrents: function () {
                     this.currentgroup = this.currentitem = this.currentset = this.currentuser = 0;
