@@ -1,19 +1,19 @@
     /* Links */
-    a,
+    /* a,
     a:focus,
     a:hover, .navbar-light .navbar-nav .nav-link{
       color: #6641B1;
       font-weight: 500px;
     }
-    
+     */
     /* Custom default button */
     
-    .btn-primary,
+    /* .btn-primary,
     .btn-primary:hover,
     .btn-primary:focus {
       background-color: #DF427C;
       border: .05rem solid #CB205F;
-    }
+    } */
 
     
     
@@ -37,7 +37,7 @@
         line-height: 4rem;
     }
 
-    .color-primary-0 {
+  .color-primary-0 {
         color: #ACEE64
     }
 
@@ -58,7 +58,7 @@
         color: #7ED321
     }
 
-    .color-secondary-1-0 {
+  .color-secondary-1-0 {
         color: #FFC06B
     }
 
@@ -121,11 +121,11 @@
         color: #CB205F
     }
 
-    .card:hover,
+    /* .card:hover,
     .list-group-item:hover, .btn-nav:hover {
         border-color: #4E279F;
         cursor: pointer;
-    }
+    } */
 
     .btn-nav{
         width: 100%;
@@ -136,12 +136,12 @@
         color: black;
         font-size: 1.25rem
     }
-    .btn-nav:hover{
+    /* .btn-nav:hover{
         background-color: white;
         border-color: #4E279F;
         color: black;
         
-    }
+    } */
 
     i{
         padding: 0 .5em;
