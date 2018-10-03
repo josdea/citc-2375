@@ -1,9 +1,12 @@
 <!doctype html>
 <html lang="en">
+<!-- TODO link to all reports  -->
+<!-- TODO reports need to allow selection of sets, items, groups, learner -->
 
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
@@ -25,7 +28,7 @@
         <header class="masthead mb-auto">
             <div class="inner">
                 <nav class="navbar navbar-expand-sm navbar-light">
-                    <a class="navbar-brand" href="#dashboard" v-on:click="updateaction(actions[0])">{{title}}</a>
+                    <a class="navbar-brand" href="dashboard.html">{{title}}</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -43,29 +46,34 @@
                         </ul>
                     </div>
                 </nav>
-                <!-- v-if="(currentgroup !== 0 || currentuser !== 0 || currentset!==0)" -->
                 <nav aria-label="breadcrumb" v-if="currentaction !== actions[0]">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#dashboard" v-on:click="updateaction(actions[0])">{{actions[0]}}</a></li>
+                        <li class="breadcrumb-item"><a href="#dashboard" v-on:click="updateaction(actions[0]); resetcurrents()">{{actions[0]}}</a></li>
                         <li class="breadcrumb-item" v-if="currentaction === actions[1] || currentaction === actions[7] || currentaction === actions[8] || currentaction === actions[13]"><a
-                                href="#assess" v-on:click="updateaction(actions[1])">{{actions[1]}}</a></li>
-                        <li class="breadcrumb-item" v-if="currentaction === actions[2]"><a href="#assessmentsets"
-                                v-on:click="updateaction(actions[2])">{{actions[2]}}</a></li>
+                                href="#assess" v-on:click="updateaction(actions[1]); resetcurrents()">{{actions[1]}}</a></li>
+                        <li class="breadcrumb-item" v-if="currentaction === actions[2] || currentaction ===actions[9]"><a
+                                href="#assessmentsets" v-on:click="updateaction(actions[2]); resetcurrents()">{{actions[2]}}</a></li>
                         <li class="breadcrumb-item" v-if="currentaction === actions[3]"><a href="#assessmentitems"
-                                v-on:click="updateaction(actions[3])">{{actions[3]}}</a></li>
-                        <li class="breadcrumb-item" v-if="currentaction === actions[4]"><a href="#groups" v-on:click="updateaction(actions[4])">{{actions[4]}}</a></li>
-                        <li class="breadcrumb-item" v-if="currentaction === actions[5]"><a href="#learners" v-on:click="updateaction(actions[5])">{{actions[5]}}</a></li>
-                        <li class="breadcrumb-item" v-if="currentaction === actions[6]"><a href="#Reports" v-on:click="updateaction(actions[6])">{{actions[6]}}</a></li>
+                                v-on:click="updateaction(actions[3]); resetcurrents()">{{actions[3]}}</a></li>
+                        <li class="breadcrumb-item" v-if="currentaction === actions[4] || currentaction === actions[11] || currentaction === actions[15]"><a
+                                href="#groups" v-on:click="updateaction(actions[4]); resetcurrents()">{{actions[4]}}</a></li>
+                        <li class="breadcrumb-item" v-if="currentaction === actions[5]"><a href="#learners" v-on:click="updateaction(actions[5]); resetcurrents()">{{actions[5]}}</a></li>
+                        <li class="breadcrumb-item" v-if="currentaction === actions[6]"><a href="#Reports" v-on:click="updateaction(actions[6]); resetcurrents()">{{actions[6]}}</a></li>
                         <li class="breadcrumb-item" v-if="currentaction === actions[7]"><a href="#Assess Group"
-                                v-on:click="updateaction(actions[7])">{{actions[7]}}</a></li>
+                                v-on:click="updateaction(actions[7]); resetcurrents()">{{actions[7]}}</a></li>
                         <li class="breadcrumb-item" v-if="currentaction === actions[8] || currentaction === actions[13]"><a
-                                href="#Assess Learner" v-on:click="updateaction(actions[8])">{{actions[8]}}</a></li>
+                                href="#Assess Learner" v-on:click="updateaction(actions[8]); resetcurrents()">{{actions[8]}}</a></li>
 
                         <li class="breadcrumb-item" v-if="currentitem !== 0">{{currentitem.item.substr(0,20)}}...</li>
                         <li class="breadcrumb-item" v-if="currentgroup !== 0">{{currentgroup.name}}</li>
                         <li class="breadcrumb-item" v-if="currentuser !== 0">{{currentuser.first_name}}
                             {{currentuser.last_name}}</li>
                         <li class="breadcrumb-item" v-if="currentset !== 0">{{currentset.name}}</li>
+                        <li class="breadcrumb-item" v-if="currentaction === actions[9]">{{actions[9]}}</li>
+                        <li class="breadcrumb-item" v-if="currentaction === actions[11]">{{actions[11]}}</li>
+                        <li class="breadcrumb-item" v-if="currentaction === actions[15]">{{actions[15]}}</li>
+
+                        <li class="breadcrumb-item" v-if="currentreport !== 0">{{currentreport.name}}</li>
                     </ol>
                 </nav>
             </div>
@@ -87,14 +95,16 @@
             <!-- ASSESS SCREEN -->
             <div id="assess" v-if="currentaction == actions[1]">
 
-                    <div class="row">
-                            <div class="col-md-6">
-                                <button type="button" class="btn btn-lg my-2 btn-nav" v-on:click="updateaction(actions[7])"><i class="fas fa-angle-double-right fa-5x color-primary-4"></i> <br>{{actions[7]}}</button>
-                            </div>
-                            <div class="col-md-6">
-                                    <button type="button" class="btn btn-lg my-2 btn-nav" v-on:click="updateaction(actions[8])"><i class="fas fa-angle-right fa-5x color-primary-3"></i> <br>{{actions[8]}}</button>
-                                </div>
-                        </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <button type="button" class="btn btn-lg my-2 btn-nav" v-on:click="updateaction(actions[7])"><i
+                                class="fas fa-angle-double-right fa-5x color-primary-4"></i> <br>{{actions[7]}}</button>
+                    </div>
+                    <div class="col-md-6">
+                        <button type="button" class="btn btn-lg my-2 btn-nav" v-on:click="updateaction(actions[8])"><i
+                                class="fas fa-angle-right fa-5x color-primary-3"></i> <br>{{actions[8]}}</button>
+                    </div>
+                </div>
 
             </div>
 
@@ -143,20 +153,22 @@
                 <h4 v-if="currentgroup !== 0">{{currentgroup.name}} <br><small>{{currentgroup.description}}</small></h4>
                 <div class="list-group">
                     <button type="button" class="list-group-item list-group-item-action my-2 py-4 mx-auto w-100 text-left"
-                        v-if="currentgroup === 0"><i class="fas fa-plus-circle color-complement-4"></i>
-                        Create Assessment Set</button>
+                        v-if="currentgroup === 0" v-on:click="updateaction(actions[11])"><i class="fas fa-plus-circle color-complement-4"></i>
+                        {{actions[11]}}</button>
                     <button type="button" class="list-group-item list-group-item-action my-2 py-4 mx-auto w-100 text-left "
-                        v-if="currentgroup !== 0 && currentaction == actions[4]"><i class="fas fa-angle-double-right color-primary-4"></i>Assess
-                        Group</button>
+                        v-if="currentgroup !== 0 && currentaction == actions[4]" v-on:click="updateaction(actions[7])"><i
+                            class="fas fa-angle-double-right color-primary-4"></i>{{actions[7]}}</button>
+                    <button type="button" class="list-group-item list-group-item-action my-2 py-4 mx-auto w-100 text-left "
+                        v-if="currentgroup !== 0 && currentaction == actions[4]" v-on:click="updateaction(actions[15])"><i
+                            class="fas fa-plus-circle color-secondary-1-3"></i>{{actions[15]}}</button>
                     <button type="button" class="list-group-item list-group-item-action my-2 py-4 mx-auto w-100 text-left "
                         v-if="currentgroup !== 0 && currentaction == actions[4]"><i class="far fa-edit color-complement-3"></i>Edit
                         / Rename Group</button>
                     <button type="button" class="list-group-item list-group-item-action my-2 py-4 mx-auto w-100 text-left "
-                        v-if="currentgroup !== 0 && currentaction == actions[4]"><i class="far fa-chart-bar color-secondary-2-3"></i>Group
-                        Report</button>
+                        v-if="currentgroup !== 0 && currentaction == actions[4]"><i class="far fa-chart-bar color-secondary-2-3"></i>{{reports[2].name}}</button>
                     <button type="button" class="list-group-item list-group-item-action my-2 py-4 mx-auto w-100 text-left "
                         v-if="currentgroup !== 0 && currentaction == actions[4]"><i class="fas fa-minus-circle color-complement-1"></i>
-                        Delete Group</button>
+                        {{actions[12]}}</button>
 
                     <button type="button" class="list-group-item list-group-item-action my-2 py-4 mx-auto w-100 text-left "
                         v-for="group in groups" :key="group.id" v-on:click="setcurrentgroup(group)" v-if="currentgroup === 0">{{group.name}}
@@ -165,22 +177,68 @@
                 </div>
             </div>
 
+            <!-- CREATE GROUP SCREEN -->
+            <div id="creategroup" v-if="currentaction === actions[11]">
+                <h4 class="offset-md-3">{{actions[11]}}</h4>
+                <form>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label" for="name">Name</label>
+                        <div class="col-sm-9">
+                            <input id="name" name="name" placeholder="Group Name" type="text" required="required" class="form-control here"
+                                maxlength="115">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label" for="textarea">Description</label>
+                        <div class="col-sm-9">
+                            <textarea id="textarea" name="textarea" cols="40" rows="3" class="form-control" maxlength="250"
+                                aria-describedby="textareaHelpBlock"></textarea>
+                            <span id="textareaHelpBlock" class="form-text text-muted">Optional description of this
+                                group</span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="learner" class="col-sm-3 col-form-label">Learner(s)</label>
+                        <div class="col-sm-9">
+                            <textarea id="learner" name="learner" cols="40" rows="5" class="form-control"
+                                aria-describedby="itemHelpBlock" placeholder="First Name Last Name
+First Name Last Name
+First Name Last Name
+                            "></textarea>
+                            <span id="itemHelpBlock" class="form-text text-muted">A list of learners. Multiple
+                                learners can be added by putting each on a separate line. These can also be added
+                                later.</span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="offset-3 col-9">
+                            <button name="submit" type="submit" class="btn btn-primary">Create Group</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
 
             <!-- ASSESSMENT SETS SCREEN-->
             <div id="assessmentsets" v-if="currentaction == actions[2]">
                 <h4 v-if="currentset !== 0">{{currentset.name}} <br><small>{{currentset.description}}</small></h4>
                 <div class="list-group">
                     <button type="button" class="list-group-item list-group-item-action my-2 py-4 mx-auto w-100 text-left"
-                        v-if="currentset === 0"><i class="fas fa-plus-circle color-complement-4"></i>
-                        Create Assessment Set</button>
+                        v-if="currentset === 0" v-on:click="updateaction(actions[9])"><i class="fas fa-plus-circle color-complement-4"></i>
+                        {{actions[9]}}</button>
                     <!-- <button type="button" class="list-group-item list-group-item-action my-2 py-4 mx-auto w-100 text-left " v-if="currentset !== 0 && currentaction == actions[2]"
                         v-on:click="setcurrentset(0)"><i class="fas fa-arrow-left color-complement-4"></i>Back</button> -->
+                    <button type="button" class="list-group-item list-group-item-action my-2 py-4 mx-auto w-100 text-left "
+                        v-if="currentset !== 0 && currentaction == actions[2]" v-on:click="updateaction(actions[14])"><i
+                            class="fas fa-plus-circle color-complement-3"></i>{{actions[14]}}</button>
                     <button type="button" class="list-group-item list-group-item-action my-2 py-4 mx-auto w-100 text-left "
                         v-if="currentset !== 0 && currentaction == actions[2]"><i class="far fa-edit color-complement-3"></i>Edit
                         / Rename Assessment Set</button>
                     <button type="button" class="list-group-item list-group-item-action my-2 py-4 mx-auto w-100 text-left "
-                        v-if="currentset !== 0 && currentaction == actions[2]"><i class="far fa-chart-bar color-secondary-2-3"></i>Assessment
-                        Set Report</button>
+                        v-if="currentset !== 0 && currentaction == actions[2]" v-on:click="updateaction(actions[6]); setcurrentreport(reports[0]);"><i
+                            class="far fa-chart-bar color-secondary-2-3">
+                        </i>{{reports[0].name}}</button>
                     <button type="button" class="list-group-item list-group-item-action my-2 py-4 mx-auto w-100 text-left "
                         v-if="currentset !== 0 && currentaction == actions[2]"><i class="fas fa-minus-circle color-complement-1"></i>
                         Delete Assessment Set</button>
@@ -191,21 +249,55 @@
             </div>
 
 
+            <!-- CREATE ASSESSMENT SET SCREEN -->
+            <div id="createset" v-if="currentaction === actions[9]">
+                <h4 class="offset-md-3">{{actions[9]}}</h4>
+                <form>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label" for="name">Name</label>
+                        <div class="col-sm-9">
+                            <input id="name" name="name" placeholder="Assessment Set Name" type="text" required="required"
+                                class="form-control here" maxlength="115">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label" for="textarea">Description</label>
+                        <div class="col-sm-9">
+                            <textarea id="textarea" name="textarea" cols="40" rows="3" class="form-control" maxlength="250"
+                                aria-describedby="textareaHelpBlock"></textarea>
+                            <span id="textareaHelpBlock" class="form-text text-muted">Optional description of this set</span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="item" class="col-sm-3 col-form-label">Item(s)</label>
+                        <div class="col-sm-9">
+                            <textarea id="item" name="item" cols="40" rows="5" class="form-control" aria-describedby="itemHelpBlock"></textarea>
+                            <span id="itemHelpBlock" class="form-text text-muted">A list of assessment items. Multiple
+                                items can be added by putting each on a separate line. These can also be added later.</span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="offset-3 col-9">
+                            <button name="submit" type="submit" class="btn btn-primary">{{actions[9]}}</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
             <!-- ASESSMENT ITEMS SCREEN-->
             <div id="items" v-if="currentaction == actions[3]">
                 <h4 v-if="currentitem !== 0">{{currentitem.item}}</h4>
                 <div class="list-group">
                     <button type="button" class="list-group-item list-group-item-action my-2 py-4 mx-auto w-100 text-left"
-                        v-if="currentitem === 0"><i class="fas fa-plus-circle color-complement-4"></i>
-                        Create Assessment Item</button>
+                        v-if="currentitem === 0" v-on:click="updateaction(actions[14])"><i class="fas fa-plus-circle color-complement-4"></i>
+                        {{actions[14]}}</button>
                     <!-- <button type="button" class="list-group-item list-group-item-action my-2 py-4 mx-auto w-100 text-left " v-if="currentitem !== 0 && currentaction == actions[3]"
                         v-on:click="setcurrentitem(0)"><i class="fas fa-arrow-left color-complement-3"></i>Back</button> -->
                     <button type="button" class="list-group-item list-group-item-action my-2 py-4 mx-auto w-100 text-left "
                         v-if="currentitem !== 0 && currentaction == actions[3]"><i class="far fa-edit color-complement-3"></i>Edit
                         Assessment Item</button>
                     <button type="button" class="list-group-item list-group-item-action my-2 py-4 mx-auto w-100 text-left "
-                        v-if="currentitem !== 0 && currentaction == actions[3]"><i class="far fa-chart-bar color-secondary-2-3"></i>Assessment
-                        Item Report</button>
+                        v-if="currentitem !== 0 && currentaction == actions[3]"><i class="far fa-chart-bar color-secondary-2-3"></i>{{reports[1].name}}</button>
                     <button type="button" class="list-group-item list-group-item-action my-2 py-4 mx-auto w-100 text-left "
                         v-if="currentitem !== 0 && currentaction == actions[3]"><i class="fas fa-minus-circle color-complement-1"></i>
                         Delete Assessment Item</button>
@@ -216,14 +308,44 @@
                 </div>
             </div>
 
+
+            <!-- CREATE ASSESSMENT ITEMS SCREEN -->
+            <div id="createset" v-if="currentaction === actions[14]">
+                <h4 class="offset-md-3">{{actions[14]}}</h4>
+                <form>
+                    <div class="form-group row">
+                        <label for="assessment_set" class="col-sm-3 col-form-label">Assessment Set</label>
+                        <div class="col-sm-9">
+                            <select id="assessment_set" name="assessment_set" required="required" class="form-control"
+                                v-model="currentset">
+                                <option v-for="set in sets" :value="set">{{set.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="item" class="col-sm-3 col-form-label">Item(s)</label>
+                        <div class="col-sm-9">
+                            <textarea id="item" name="item" cols="40" rows="5" class="form-control" aria-describedby="itemHelpBlock"></textarea>
+                            <span id="itemHelpBlock" class="form-text text-muted">A list of assessment items. Multiple
+                                items can be added by putting each on a separate line. These can also be added later.</span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="offset-3 col-9">
+                            <button name="submit" type="submit" class="btn btn-primary">{{actions[14]}}</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
             <!-- LEARNER SCREEN-->
             <div id="learners" v-if="currentaction == actions[5]">
                 <h4 v-if="currentuser !== 0">{{currentuser.first_name}} {{currentuser.last_name}}</h4>
                 <div class="list-group">
 
                     <button type="button" class="list-group-item list-group-item-action my-2 py-4 mx-auto w-100 text-left"
-                        v-if="currentuser === 0"><i class="fas fa-plus-circle color-complement-4"></i>
-                        Create Learner</button>
+                        v-if="currentuser === 0" v-on:click="updateaction(actions[15])"><i class="fas fa-plus-circle color-secondary-1-3"></i>
+                        {{actions[15]}}</button>
                     <!-- <button type="button" class="list-group-item list-group-item-action my-2 py-4 mx-auto w-100 text-left " v-if="currentuser !== 0 && currentaction == actions[5]"
                         v-on:click="setcurrentuser(0)"><i class="fas fa-arrow-left color-secondary-1-3"></i>Back</button> -->
                     <button type="button" class="list-group-item list-group-item-action my-2 py-4 mx-auto w-100 text-left "
@@ -243,8 +365,40 @@
                 </div>
             </div>
 
+            <!-- CREATE LEARNER SCREEN -->
+            <div id="createlearner" v-if="currentaction === actions[15]">
+                <h4 class="offset-md-3">{{actions[15]}}</h4>
+                <form>
+                    <div class="form-group row">
+                        <label for="group" class="col-sm-3 col-form-label">Group</label>
+                        <div class="col-sm-9">
+                            <select id="group" name="group" required="required" class="form-control" v-model="currentgroup">
+                                <option v-for="group in groups" :value="group">{{group.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="learner" class="col-sm-3 col-form-label">Learner(s)</label>
+                        <div class="col-sm-9">
+                            <textarea id="learner" name="learner" cols="40" rows="5" class="form-control"
+                                aria-describedby="itemHelpBlock" placeholder="First Name Last Name
+First Name Last Name
+First Name Last Name
+                            "></textarea>
+                            <span id="itemHelpBlock" class="form-text text-muted">A list of learners. Multiple
+                                learners can be added by putting each on a separate line. These can also be added
+                                later.</span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="offset-3 col-9">
+                            <button name="submit" type="submit" class="btn btn-primary">Create Group</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
             <!-- ASSESSMENT SETTINGS SCREEN -->
-            <!-- todo fix mobile version of this form -->
             <div id="prepareassessment" v-if="currentaction == actions[13]">
                 <form action="assess.php" method="post" id="assessmentsettings">
                     <div class="form-group row ">
@@ -377,8 +531,10 @@
             el: '#app',
             data: {
                 title: 'Adepto',
-                // subtitle: 'Dashboard',
-                actions: ['Dashboard', 'Assess', 'Assessment Sets', 'Assessment Items', 'Groups', 'Learners', 'Reports', 'Assess Group', 'Assess Learner', 'Create Set', 'Delete Set', 'Create Group', 'Delete Group', 'Assessment Settings'],
+                loggedin: true,
+                actions: ['Dashboard', 'Assess', 'Assessment Sets', 'Assessment Items', 'Groups',
+                    'Learners', 'Reports', 'Assess Group', 'Assess Learner', 'Create Assessment Set',
+                    'Delete Set', 'Create Group', 'Delete Group', 'Assessment Settings', 'Add Assessment Items', 'Add Learners'],
                 currentaction: 'Dashboard',
                 dashboardbuttons: [
                     {
@@ -467,12 +623,16 @@
                     this.currentaction = action;
                     // this.subtitle = action;
                     console.log(this.currentaction);
-                    if (this.currentaction !== this.actions[13]) {
-                        this.resetcurrents();
-                    }
+                    // if (this.currentaction !== this.actions[13]) {
+                    //     this.resetcurrents();
+                    // }
 
-                    if (this.currentaction === this.actions[0]) {
-                        this.resetcurrents();
+                    if (this.currentaction === this.actions[0] || this.currentaction === this.actions[2]
+                        || this.currentaction === this.actions[3]
+                        || this.currentaction === this.actions[4]
+                        || this.currentaction === this.actions[5]
+                    ) {
+                        // this.resetcurrents();
                     }
                 },
                 setcurrentuser: function (user) {
@@ -496,7 +656,7 @@
                     console.log(this.currentreport.name);
                 },
                 resetcurrents: function () {
-                    this.currentgroup = this.currentitem = this.currentset = this.currentuser = 0;
+                    this.currentgroup = this.currentitem = this.currentset = this.currentuser = this.currentreport = 0;
                 }
             }
         })
