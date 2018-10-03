@@ -21,10 +21,10 @@
     <h1>a title</h1>
     <hr>
     <div class="container-fluid">
-      Letter: {{currentletter}}
+      <p v-on:click="currentletter = ''">Letter: {{currentletter}}</p>
       <div class="row">
 
-        <div class="col-4" v-for="(letter, key) in letters">
+        <div class="col-4" v-for="(letter, key) in letters" v-if="currentletter === ''">
           <button type="button" class="btn btn-outline-primary btn-lg w-100 my-1 text-center" v-bind:class="{ disabled: letter === 0 }"
             :aria-disabled="letter == 0" v-on:click="currentletter = key" v-if="letter > 0">{{key.toUpperCase()}} <span
               class="badge badge-primary float-right mt-2 d-none d-sm-block" v-if="letter !== 0">{{letter}}</span></button>
@@ -40,13 +40,7 @@
       </div>
 
     </div>
-
-
-
   </div>
-
-
-
   <script>
 
     var names = [
