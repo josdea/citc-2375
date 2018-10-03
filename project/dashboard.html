@@ -96,35 +96,19 @@
                                 </div>
                         </div>
 
-
-                <!-- <div class="card-deck">
-                    <div class="card my-2" v-on:click="updateaction(actions[7])">
-                        <div class="card-body">
-                            <p class="card-text"> <i class="fas fa-angle-double-right fa-5x color-primary-4"></i></p>
-                            <h5 class="card-title">{{actions[7]}}</h5>
-                        </div>
-                    </div>
-
-                    <div class="card my-2" v-on:click="updateaction(actions[8])">
-                        <div class="card-body">
-                            <p class="card-text"> <i class="fas fa-angle-right fa-5x color-primary-3"></i></p>
-                            <h5 class="card-title">{{actions[8]}}</h5>
-                        </div>
-                    </div>
-                </div> -->
             </div>
 
             <!-- ASSESS GROUP  -->
             <div id="assessgroup" v-if="currentaction==actions[7]">
 
                 <div class="list-group" v-if="(currentgroup === 0)">
-                    <button type="button" class="list-group-item list-group-item-action my-2 py-4 mx-auto w-75 text-left "
+                    <button type="button" class="list-group-item list-group-item-action my-2 py-4 mx-auto w-100 text-left "
                         v-for="group in groups" :key="group.id" v-on:click="setcurrentgroup(group)">{{group.name}}
                         - {{group.description}}</button>
                 </div>
 
                 <div class="list-group" v-if="(currentset === 0 && currentgroup !== 0)">
-                    <button type="button" class="list-group-item list-group-item-action my-2 py-4 mx-auto w-75 text-left "
+                    <button type="button" class="list-group-item list-group-item-action my-2 py-4 mx-auto w-100 text-left "
                         v-for="set in sets" :key="set.id" v-on:click="setcurrentset(set)">{{set.name}}
                         - {{set.description}}</button>
                 </div>
@@ -134,20 +118,20 @@
             <div id="assesslearner" v-if="currentaction==actions[8]">
 
                 <div class="list-group" v-if="(currentgroup === 0)">
-                    <button type="button" class="list-group-item list-group-item-action my-2 py-4 mx-auto w-75 text-left "
+                    <button type="button" class="list-group-item list-group-item-action my-2 py-4 mx-auto w-100 text-left "
                         v-for="group in groups" :key="group.id" v-on:click="setcurrentgroup(group)">{{group.name}}
                         - {{group.description}}</button>
                 </div>
 
                 <div class="list-group" v-if="(currentuser === 0 && currentgroup !== 0)">
-                    <button type="button" class="list-group-item list-group-item-action my-2 py-4 mx-auto w-75 text-left "
+                    <button type="button" class="list-group-item list-group-item-action my-2 py-4 mx-auto w-100 text-left "
                         v-for="user in users" :key="user.id" v-on:click="setcurrentuser(user)">{{user.first_name}}
                         {{user.last_name}} (Group: {{user.group_id}})
                     </button>
                 </div>
 
                 <div class="list-group" v-if="(currentset === 0 && currentgroup !== 0 && currentuser !== 0)">
-                    <button type="button" class="list-group-item list-group-item-action my-2 py-4 mx-auto w-75 text-left "
+                    <button type="button" class="list-group-item list-group-item-action my-2 py-4 mx-auto w-100 text-left "
                         v-for="set in sets" :key="set.id" v-on:click="setcurrentset(set); updateaction(actions[13])">{{set.name}}
                         - {{set.description}}</button>
                 </div>
@@ -423,7 +407,7 @@
                         colorclass: "color-secondary-1-3"
                     },
                     {
-                        action: 4,
+                        action: 6,
                         icon: "far fa-chart-bar",
                         colorclass: "color-secondary-2-3"
                     }
