@@ -400,7 +400,7 @@ First Name Last Name
 
             <!-- ASSESSMENT SETTINGS SCREEN -->
             <div id="prepareassessment" v-if="currentaction == actions[13]">
-                <form action="assess.php" method="post" id="assessmentsettings">
+                <form action="assess.html" method="post" id="assessmentsettings">
                     <div class="form-group row ">
                         <label class="col-sm-6 col-form-label">Settings</label>
                         <div class="col text-left">
@@ -526,7 +526,17 @@ First Name Last Name
         crossorigin="anonymous"></script>
 
     <script>
-
+// todo add reusable delete confirmation function to receive request and then forward to right delete function 
+// function myFunction() {
+//     var txt;
+//     var r = confirm("Press a button!");
+//     if (r == true) {
+//         txt = "You pressed OK!";
+//     } else {
+//         txt = "You pressed Cancel!";
+//     }
+//     document.getElementById("demo").innerHTML = txt;
+// }
         var app = new Vue({
             el: '#app',
             data: {

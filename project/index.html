@@ -56,7 +56,7 @@
       <div id="splash" v-if="currentaction == actions[0]">
         <h1 class="cover-heading">Assess <i class="fas fa-angle-double-right fa-xs"></i><br> Track <i class="fas fa-chart-line fa-xs"></i><br>
           Report <i class="far fa-chart-bar fa-xs"></i></h1>
-        <img class="mx-auto w-50" src="./assets/demo.gif" alt="sliding screens of various multiplcation facts">
+        <img class="mx-auto w-25" src="./assets/demo.gif" alt="sliding screens of various multiplcation facts">
         <p class="lead">Formative Assessment Done Right!</p>
         <p class="lead">
           <a href="#" class="btn btn-lg btn-primary text-white" v-on:click="updateaction(actions[1])">Get Started</a>
@@ -65,7 +65,7 @@
 
       <!-- LOGIN SCREEN -->
       <div id="login" v-if="currentaction == actions[1]">
-        <form class="form-signin">
+        <form action="dashboard.html" method="post" class="form-signin">
           <h3 class="">Login</h3>
           <br>
           <label for="inputEmail" class="sr-only">Email address</label>
@@ -85,7 +85,7 @@
       <div id="signup" v-if="currentaction == actions[2]">
         <h4>Sign Up</h4>
         <br>
-        <form>
+        <form action="dashboard.html" method="post">
           <div class="form-group row">
             <label class="col-form-label sr-only" for="email">Email</label>
             <div class="mx-auto w-50">

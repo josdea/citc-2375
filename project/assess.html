@@ -1,0 +1,92 @@
+<html>
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
+        crossorigin="anonymous">
+    <title>Adepto</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        .lead {
+            font-size: 5em;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="container-fluid h-25">
+            <!-- <a href="./dashboard.html">Back to dashboard...</a> -->
+            <h4 class="text-center">{{title}}</h4>
+            <div class="row ">
+                <div class="col-6">{{topLeft}}</div>
+                <div class="col-6 text-right">{{topRight}}</div>
+            </div>
+        </div>
+
+        <div class="container-fluid h-50">
+            <div class="row align-items-center h-100">
+                <div class="col-12 mx-auto">
+                    <p class="lead text-center">{{currentItem}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid h-25 ">
+            <div class="h-50 ">
+            </div>
+            <div class="h-50 ">
+               
+                <div class="row h-50">
+                    <div class="col-6">{{bottomLeft}}</div>
+                    <div class="col-6 text-right">{{bottomRight}}</div>
+                </div>
+                <div class="row h-50">
+                        <div class="col-4">
+                            <button type="button" class="btn btn-danger ">Incorrect</button>
+                        </div>
+                        <div class="col-4 text-center">
+                                <small><a href="./dashboard.html">Back to Dashboard</a></small>
+                            </div>
+                        <div class="col-4 text-right">
+                            <button type="button" class="btn btn-success ">Correct</button>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- todo interface tutorial and swipe capability -->
+    <script>
+
+        var app = new Vue({
+            el: "#app",
+            data: {
+                title: "Assessment",
+                currentletter: '',
+                topLeft: 'Multiplicaton Facts',
+                topRight: 'Sally James',
+                bottomLeft: 'Remaining: 11',
+                bottomRight: 'Seconds: 4',
+                currentItem: '4 x 8'
+
+            },
+            computed: {
+                // filterbycurrentletter: function () {
+                //     let temparray = [];
+
+                // }
+            }
+        });
+    </script>
+
+</body>
+
+</html>
+

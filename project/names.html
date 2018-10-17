@@ -8,8 +8,12 @@
   <style>
     .btn{
     /* width: 100%; */
-    font-size: 1.3em;
-    padding: 1.2em;
+    font-size: 5em;
+    /* line-height: 2em; */
+    /* padding: .4em; */
+  }
+  span{
+    display: none;
   }
 
   </style>
@@ -24,10 +28,12 @@
       <p v-on:click="currentletter = ''">Letter: {{currentletter}}</p>
       <div class="row">
 
-        <div class="col-4" v-for="(letter, key) in letters" v-if="currentletter === ''">
-          <button type="button" class="btn btn-outline-primary btn-lg w-100 my-1 text-center" v-bind:class="{ disabled: letter === 0 }"
-            :aria-disabled="letter == 0" v-on:click="currentletter = key" v-if="letter > 0">{{key.toUpperCase()}} <span
-              class="badge badge-primary float-right mt-2 d-none d-sm-block" v-if="letter !== 0">{{letter}}</span></button>
+        <div class="col-sm-6" v-for="(letter, key) in letters" v-if="currentletter === ''">
+          <button type="button" class="btn btn-outline-primary btn-lg w-100 my-sm-2 text-center" v-bind:class="{ disabled: letter === 0 }"
+            :aria-disabled="letter == 0" v-on:click="currentletter = key" v-if="letter > 0">{{key.toUpperCase()}}
+            <!-- <span
+              class="badge badge-primary float-right mt-2 d-none d-sm-block" v-if="letter !== 0">{{letter}}</span> -->
+          </button>
         </div>
       </div>
 
