@@ -25,7 +25,7 @@
         <div class="container-fluid h-25">
             <h4 class="text-center">{{title}}</h4>
             <div class="row ">
-                <div class="col-6">{{assessmentSet}}</div>
+                <div class="col-6">{{assessmentSetName}}</div>
                 <div class="col-6 text-right">{{learner}}</div>
             </div>
         </div>
@@ -45,7 +45,7 @@
             <div class="h-50 ">
 
                 <div class=" h-50">
-                    <div class="text-center d-block d-xl-none">
+                    <div class="text-center d-block ">
                         <!-- <div class="col text-right d-block d-xl-none"> -->
                         <button type="button" class="btn btn-danger " v-on:click="incorrectAnswer">Incorrect</button>
                         <!-- </div>   -->
@@ -64,7 +64,7 @@
                             <!-- <small><a href="./dashboard.html">End Assessment</a></small> -->
                         </div>
 
-                        <div class="col-6 text-right">{{bottomRight}} {{seconds}}</div>
+                        <div class="col-6 text-right">{{bottomRight}} {{timerDisplay}}</div>
 
 
                     </div>
@@ -84,11 +84,11 @@
             data: {
                 title: "Adepto - Assessment",
                 randomOrder: true,
-                desiredAnswerTime: 0,
+                desiredAnswerTime: 10,
                 autoAdvance: true,
                 answerCountFilter: 3,
                 itemLimit: 10,
-                assessmentSet: 'Multiplicaton Facts',
+                assessmentSetName: 'Multiplicaton Facts',
                 learner: 'Sally James',
                 // bottomLeft: 'Remaining: 11',
                 bottomRight: 'Seconds: ',
@@ -104,8 +104,14 @@
                 ],
                 items: [],
                 currentItemIndex: 0,
-                sampledesiredAnswerTime: 0,
                 currentItem: { item: '' }
+            },
+            created: function () {
+                this.items = this.sampleitems;
+                // this.desiredAnswerTime = this.sampledesiredAnswerTime;
+                this.interval = setInterval(this.updateTimer, 1000);
+                this.beginAssessment();
+
             },
             computed: {
                 itemsRemaining: function () {
@@ -115,16 +121,24 @@
                 itemsRemainingPercentage: function () {
                     // return 100
                     return Math.round((this.currentItemIndex + 1) / this.items.length * 100)
+                },
+                timerDisplay: function(){
+                    if(this.desiredAnswerTime !== 0){
+                        return this.desiredAnswerTime - this.seconds
+                    }else{
+                        return this.seconds
+                    }
                 }
             },
             methods: {
                 correctAnswer: function (event) {
-                    console.log("correct answer for " + this.items[this.currentItemIndex].item);
+                    console.log("correct answer for " + this.items[this.currentItemIndex].item + " seconds " + this.seconds);
                     clearTimeout(this.timeout)
                     this.nextItem()
                 },
                 incorrectAnswer: function (event) {
-                    console.log("incorrect answer for " + this.items[this.currentItemIndex].item);
+                    console.log("incorrect answer for " + this.items[this.currentItemIndex].item  + " seconds " + this.seconds);
+                    clearTimeout(this.timeout)
                     this.nextItem()
                 },
                 beginAssessment: function () {
@@ -138,25 +152,28 @@
                 },
                 endTimer: function () {
                     console.log("timer ended");
-                    clearTimeout(this.timeout)
+                    
                     if (this.desiredAnswerTime != 0) {
                         this.incorrectAnswer()
                         // this.nextItem()
                         // this.currentItem = this.items[this.currentItemIndex]
+                    }else{
+                        clearTimeout(this.timeout)
                     }
                 },
                 startTimer: function () {
                     console.log("timer started");
                     if (this.desiredAnswerTime !== 0) {
-                        this.seconds = this.desiredAnswerTime
+                        this.seconds = 0
                     }
 
                     this.timeout = setTimeout(this.endTimer, this.desiredAnswerTime * 1000)
                 },
                 updateTimer: function () {
-                    this.seconds -= 1;
+                    this.seconds += 1;
                 },
                 nextItem: function () {
+                    this.seconds = 0
                     if (this.currentItemIndex < (this.items.length -1)) {
                         this.currentItemIndex += 1
                         this.currentItem = this.items[this.currentItemIndex]
@@ -166,14 +183,8 @@
                     }
                 }
 
-            },
-            created: function () {
-                this.items = this.sampleitems;
-                this.desiredAnswerTime = this.sampledesiredAnswerTime;
-                this.interval = setInterval(this.updateTimer, 1000);
-                this.beginAssessment();
-
             }
+            
         });
 
     </script>
