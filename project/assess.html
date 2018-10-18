@@ -12,10 +12,12 @@
         crossorigin="anonymous">
     <title>Adepto</title>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-
     <style>
         .lead {
             font-size: 6em;
+        }
+        mark, kbd{ 
+            display: inline-block;
         }
     </style>
 </head>
@@ -25,8 +27,8 @@
         <div class="container-fluid h-25">
             <h4 class="text-center">{{title}}</h4>
             <div class="row ">
-                <div class="col-6">{{assessmentSetName}}</div>
-                <div class="col-6 text-right">{{learner}}</div>
+                <div id="assessmentname" class="col-6">{{assessmentSetName}}</div>
+                <div id="learnername" class="col-6 text-right">{{learner}}</div>
             </div>
         </div>
 
@@ -47,10 +49,10 @@
                 <div class=" h-50">
                     <div class="text-center d-block ">
                         <!-- <div class="col text-right d-block d-xl-none"> -->
-                        <button type="button" class="btn btn-danger " v-on:click="incorrectAnswer">Incorrect</button>
+                        <button id="incorrectanswer" type="button" class="btn btn-danger " v-on:click="incorrectAnswer"><i class="fas fa-arrow-left"></i> Incorrect</button>
                         <!-- </div>   -->
                         <!-- <div class="col d-block d-xl-none"> -->
-                        <button type="button" class="btn btn-success" v-on:click="correctAnswer">Correct</button>
+                        <button id="correctanswer" type="button" class="btn btn-success" v-on:click="correctAnswer">Correct <i class="fas fa-arrow-right"></i></button>
                         <!-- </div> -->
                     </div>
                 </div>
@@ -60,25 +62,65 @@
                         <!-- <div class="col-4">{{bottomLeft}}</div> -->
 
                         <div class="col-6">
-                            <a class="btn btn-secondary btn-sm" href="./dashboard.html" role="button">End Assessment</a>
+                            <a id="endassessment" class="btn btn-secondary btn-sm" href="./dashboard.html" role="button">End
+                                Assessment</a>
                             <!-- <small><a href="./dashboard.html">End Assessment</a></small> -->
                         </div>
 
-                        <div class="col-6 text-right">{{bottomRight}} {{timerDisplay}}</div>
+                        <div id="seconds" class="col-6 text-right">{{bottomRight}} {{timerDisplay}}</div>
 
 
                     </div>
-                    <div class="progress mt-2">
+                    <div id="progressbar" class="progress mt-2">
                         <div class="progress-bar" role="progressbar" :style="'width: ' + itemsRemainingPercentage + '%'"
                             :aria-valuenow="itemsRemainingPercentage" aria-valuemin="0" aria-valuemax="100">{{itemsRemaining}}</div>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Assess Learner</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <ul>
+                            <li>Timer starts when you select <strong><span class="text-primary">"Begin"</span></strong></li>
+                            <li>Ask or display the item to the learner</li>
+                            <li>Select the <strong><span class="text-success">"Correct"</span></strong> button or optionally use either the <kbd>Right-Arrow </kbd> <i class="far fa-arrow-alt-circle-right text-success"></i> or the <kbd>Enter</kbd> keys</li>
+                            <li>Select the <strong><span class="text-danger">"Incorrect"</span></strong> button or optionally use the <kbd>Left-Arrow </kbd> <i class="far fa-arrow-alt-circle-left text-danger"></i> key</li>
+                            <li>The <strong><span class="text-secondary">"End Assessment"</span></strong> button can also be activiated with the <kbd>Esc</kbd> key</li>
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+                        <a class="btn btn-secondary btn-sm" href="./dashboard.html" role="button">Dashboard</a>
+                        <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" v-on:keyup.enter="beginAssessment"
+                            v-on:click="beginAssessment">Begin</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <!-- Button trigger modal -->
+    <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        Launch demo modal
+    </button> -->
+
+
 
     <!-- todo interface tutorial and swipe capability -->
     <script>
+
+
         var app = new Vue({
             el: "#app",
             data: {
@@ -108,9 +150,9 @@
             },
             created: function () {
                 this.items = this.sampleitems;
-                // this.desiredAnswerTime = this.sampledesiredAnswerTime;
-                this.interval = setInterval(this.updateTimer, 1000);
-                this.beginAssessment();
+
+            },
+            mounted: function () {
 
             },
             computed: {
@@ -122,10 +164,10 @@
                     // return 100
                     return Math.round((this.currentItemIndex + 1) / this.items.length * 100)
                 },
-                timerDisplay: function(){
-                    if(this.desiredAnswerTime !== 0){
+                timerDisplay: function () {
+                    if (this.desiredAnswerTime !== 0) {
                         return this.desiredAnswerTime - this.seconds
-                    }else{
+                    } else {
                         return this.seconds
                     }
                 }
@@ -137,27 +179,43 @@
                     this.nextItem()
                 },
                 incorrectAnswer: function (event) {
-                    console.log("incorrect answer for " + this.items[this.currentItemIndex].item  + " seconds " + this.seconds);
+                    console.log("incorrect answer for " + this.items[this.currentItemIndex].item + " seconds " + this.seconds);
                     clearTimeout(this.timeout)
                     this.nextItem()
                 },
                 beginAssessment: function () {
+                    var that = this;
+                    window.addEventListener('keyup', function (event) {
+                        console.log(event)
+                        console.log(event.code + " Key Pressed")
+
+                        if (event.keyCode == 39 || event.keyCode == 13) {
+                            // right arrow or enter key
+                            that.correctAnswer()
+                        } else if (event.keyCode == 37) {
+                            //left arrow pressed
+                            that.incorrectAnswer()
+                        }else if (event.keyCode == 27){
+                            //escape key pressed
+                            that.endAssessment()
+                        }
+                    });
+
+
+                    this.interval = setInterval(this.updateTimer, 1000);
                     this.currentItem = this.items[0]
                     this.startTimer()
                 },
                 endAssessment: function () {
                     clearInterval(this.interval)
-                    alert("TODO end of assessment")
-                    
+                    alert("TODO end of assessment will return to dashboard and save stuff to database")
                 },
                 endTimer: function () {
                     console.log("timer ended");
-                    
+
                     if (this.desiredAnswerTime != 0) {
                         this.incorrectAnswer()
-                        // this.nextItem()
-                        // this.currentItem = this.items[this.currentItemIndex]
-                    }else{
+                    } else {
                         clearTimeout(this.timeout)
                     }
                 },
@@ -166,7 +224,6 @@
                     if (this.desiredAnswerTime !== 0) {
                         this.seconds = 0
                     }
-
                     this.timeout = setTimeout(this.endTimer, this.desiredAnswerTime * 1000)
                 },
                 updateTimer: function () {
@@ -174,29 +231,38 @@
                 },
                 nextItem: function () {
                     this.seconds = 0
-                    if (this.currentItemIndex < (this.items.length -1)) {
+                    if (this.currentItemIndex < (this.items.length - 1)) {
                         this.currentItemIndex += 1
                         this.currentItem = this.items[this.currentItemIndex]
                         this.startTimer()
-                    }else {
+                    } else {
                         this.endAssessment()
                     }
                 }
 
             }
-            
         });
+// TODO what about pausing assessment in the middle?
+// TODO enable this to save data if page is exited early or use vue on exit functions
+// window.onbeforeunload = function() {
+//    return "Do you really want to leave our brilliant application?";
+   //if we return nothing here (just calling return;) then there will be no pop-up question at all
+   //return;
+// };
 
     </script>
-
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
         crossorigin="anonymous"></script>
+    <script>
+        $("#exampleModal").modal()
 
 
+    </script>
+   
 </body>
 
 </html>
