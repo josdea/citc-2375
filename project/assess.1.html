@@ -13,71 +13,89 @@
     <title>Adepto</title>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <style>
+        /* .h-100{
+            background-color: pink;
+        } */
         .lead {
             font-size: 6em;
         }
         mark, kbd{ 
             display: inline-block;
         }
+        h1{
+            font-size: 1.2em;
+        }
+        /* #seconds{
+            background-color: green;
+        }
+        #endassessment{
+background-color: blue;
+display: inline;
+        }
+        #bottom div.text-left{
+            display: inline;
+        } */
     </style>
 </head>
 
 <body>
-    <div id="app">
-        <div class="container-fluid h-25">
-            <h4 class="text-center">{{title}}</h4>
-            <div class="row ">
-                <div id="assessmentname" class="col-6">{{assessmentSetName}}</div>
-                <div id="learnername" class="col-6 text-right">{{learner}}</div>
-            </div>
-        </div>
+    <div id="app" class="">
 
-        <div class="container-fluid h-50">
-            <div class="row align-items-center h-100">
-                <div class="col-12 mx-auto">
-                    <p class="lead text-center">{{currentItem.item}}</p>
+  
+
+        <div class="fixed-top">
+
+            <div class="row">
+                <div class="col-4 offset-4">
+                    <h1 class="text-center">{{title}}</h1>
+                </div>
+
+                <div class="col-4 text-right pb-2">
+                    <a id="endassessment" class="btn btn-secondary btn-sm" href="./dashboard.html" role="button">End
+                        Assessment</a>
+                </div>
+            </div>
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-6">{{assessmentSetName}}</div>
+                    <div class="col-6 text-right">{{learner}}</div>
                 </div>
             </div>
         </div>
 
-        <div class="container-fluid h-25 ">
-            <div class="h-50 ">
-                <!-- empty placeholder to push down footer items -->
+        <div class="container-fluid">
+                <div class="row align-items-center h-100">
+                    <div class="col-12 ">
+                        <p class="lead text-center">test{{currentItem.item}}</p>
+                    </div>
+                </div>
             </div>
-            <div class="h-50 ">
 
-                <div class=" h-50">
-                    <div class="text-center d-block ">
-                        <!-- <div class="col text-right d-block d-xl-none"> -->
-                        <button id="incorrectanswer" type="button" class="btn btn-danger " v-on:click="incorrectAnswer"><i class="fas fa-arrow-left"></i> Incorrect</button>
-                        <!-- </div>   -->
-                        <!-- <div class="col d-block d-xl-none"> -->
-                        <button id="correctanswer" type="button" class="btn btn-success" v-on:click="correctAnswer">Correct <i class="fas fa-arrow-right"></i></button>
-                        <!-- </div> -->
-                    </div>
+        <div class="fixed-bottom" id="bottom">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-6">test</div>
+                    <div class="col-6 text-right">{{bottomRight}} {{timerDisplay}}</div>
                 </div>
-                <div class="h-50">
-                    <div class="row ">
+            </div>
 
-                        <!-- <div class="col-4">{{bottomLeft}}</div> -->
+            <p class="text-center">
+                <button id="incorrectanswer" type="button" class="btn btn-danger " v-on:click="incorrectAnswer"><i
+                        class="fas fa-arrow-left"></i> Incorrect</button>
 
-                        <div class="col-6">
-                            <a id="endassessment" class="btn btn-secondary btn-sm" href="./dashboard.html" role="button">End
-                                Assessment</a>
-                            <!-- <small><a href="./dashboard.html">End Assessment</a></small> -->
-                        </div>
-
-                        <div id="seconds" class="col-6 text-right">{{bottomRight}} {{timerDisplay}}</div>
+                <button id="correctanswer" type="button" class="btn btn-success" v-on:click="correctAnswer">Correct <i
+                        class="fas fa-arrow-right"></i></button>
+            </p>
 
 
-                    </div>
-                    <div id="progressbar" class="progress mt-2">
-                        <div class="progress-bar" role="progressbar" :style="'width: ' + itemsRemainingPercentage + '%'"
-                            :aria-valuenow="itemsRemainingPercentage" aria-valuemin="0" aria-valuemax="100">{{itemsRemaining}}</div>
-                    </div>
-                </div>
+            <div id="progressbar" class="progress">
+                <div class="progress-bar" role="progressbar" :style="'width: ' + itemsRemainingPercentage + '%'"
+                    :aria-valuenow="itemsRemainingPercentage" aria-valuemin="0" aria-valuemax="100">{{itemsRemaining}}</div>
             </div>
         </div>
+
+
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
@@ -93,9 +111,14 @@
                         <ul>
                             <li>Timer starts when you select <strong><span class="text-primary">"Begin"</span></strong></li>
                             <li>Ask or display the item to the learner</li>
-                            <li>Select the <strong><span class="text-success">"Correct"</span></strong> button or optionally use either the <kbd>Right-Arrow </kbd> <i class="far fa-arrow-alt-circle-right text-success"></i> or the <kbd>Enter</kbd> keys</li>
-                            <li>Select the <strong><span class="text-danger">"Incorrect"</span></strong> button or optionally use the <kbd>Left-Arrow </kbd> <i class="far fa-arrow-alt-circle-left text-danger"></i> key</li>
-                            <li>The <strong><span class="text-secondary">"End Assessment"</span></strong> button can also be activiated with the <kbd>Esc</kbd> key</li>
+                            <li>Select the <strong><span class="text-success">"Correct"</span></strong> button or
+                                optionally use either the <kbd>Right-Arrow </kbd> <i class="far fa-arrow-alt-circle-right text-success"></i>
+                                or the <kbd>Enter</kbd> keys</li>
+                            <li>Select the <strong><span class="text-danger">"Incorrect"</span></strong> button or
+                                optionally use the <kbd>Left-Arrow </kbd> <i class="far fa-arrow-alt-circle-left text-danger"></i>
+                                key</li>
+                            <li>The <strong><span class="text-secondary">"End Assessment"</span></strong> button can
+                                also be activiated with the <kbd>Esc</kbd> key</li>
                         </ul>
                     </div>
                     <div class="modal-footer">
@@ -124,7 +147,7 @@
         var app = new Vue({
             el: "#app",
             data: {
-                title: "Adepto - Assessment",
+                title: "Assess Learner",
                 randomOrder: true,
                 desiredAnswerTime: 0,
                 autoAdvance: true,
@@ -195,7 +218,7 @@
                         } else if (event.keyCode == 37) {
                             //left arrow pressed
                             that.incorrectAnswer()
-                        }else if (event.keyCode == 27){
+                        } else if (event.keyCode == 27) {
                             //escape key pressed
                             that.endAssessment()
                         }
@@ -258,11 +281,11 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
         crossorigin="anonymous"></script>
     <script>
-        $("#exampleModal").modal()
+        // $("#exampleModal").modal()
 
 
     </script>
-   
+
 </body>
 
 </html>

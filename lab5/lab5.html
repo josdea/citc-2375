@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 
-<!-- lab 2 part a
+<!-- lab 5
 Josh Dean
 CITC 2375
 Fall 2018
-Manipulating tables with css -->
+validating form fields and displaying -->
 <html lang="en">
 
 <head>
@@ -16,8 +16,6 @@ Manipulating tables with css -->
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
     crossorigin="anonymous">
-  <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
-      crossorigin="anonymous"> -->
   <title>Customer Satisfaction Survey</title>
 
   <style>
@@ -81,6 +79,15 @@ Manipulating tables with css -->
 
         <!-- Form Name -->
         <legend>Customer Satisfaction Survey</legend>
+
+        <!-- Text input-->
+        <div id="name" class="form-group">
+          <label class="col-md-4 control-label" for="name">Name</label>
+          <div class="col-md-4">
+            <input id="name" name="name" type="text" placeholder="John Smith" class="form-control input-md">
+
+          </div>
+        </div>
 
         <!-- Multiple Radios (inline) -->
         <div class="form-group" id="firsttime">
@@ -263,10 +270,6 @@ Manipulating tables with css -->
     </form>
 
   </div>
-  <!-- Button trigger modal -->
-  <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-    Launch demo modal
-  </button> -->
   <!-- Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -282,7 +285,6 @@ Manipulating tables with css -->
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
         </div>
       </div>
     </div>
@@ -299,7 +301,10 @@ Manipulating tables with css -->
 
 
   <script>
+
+    //Called on button push - returns false to prevent default form behavior
     function checkFields() {
+      
       var surveyvalid = true;
       var kvpairs = [];
       var form = document.forms["survey"];
@@ -314,7 +319,6 @@ Manipulating tables with css -->
         if (element !== 'submit' && element !== 'reset' && element !== '') {
           if (document.forms["survey"][element].value == "") {
             surveyvalid = false;
-            console.log(element + ' is required');
             document.getElementById(element).style.color = "red";
           } else {
             document.getElementById(element).style.color = "black";
@@ -323,15 +327,47 @@ Manipulating tables with css -->
       });
 
       if (!surveyvalid) {
+
         document.getElementById("exampleModalLabel").innerHTML = "Missing Fields";
         document.getElementById("modal-body").innerHTML = "You are missing some required fields.";
         $('#exampleModal').modal();
 
+      } else {
+
+        document.getElementById("exampleModalLabel").innerHTML = "Form Results";
+        document.getElementById("modal-body").innerHTML = "Thank you "
+          + document.forms["survey"].elements.name.value
+          + " for completing our survey."
+          + '<br>'
+          + 'First Time Visiting: '
+          + document.forms["survey"].elements.firsttime.value
+          + '<br>'
+          + 'Greeted at the door: '
+          + document.forms["survey"].elements.greeted.value
+          + '<br>'
+          + 'Desired Model in stock: '
+          + document.forms["survey"].elements.havecar.value
+          + '<br>'
+          + 'Test Drive: '
+          + document.forms["survey"].elements.testdrive.value
+          + '<br>'
+          + 'Number of test drives: '
+          + document.forms["survey"].elements.testdrivecount.value
+          + '<br>'
+          + 'Test Drive Useful: '
+          + document.forms["survey"].elements.testdriveuseful.value
+          + '<br>'
+          + 'Agent Helpful: '
+          + document.forms["survey"].elements.agentrating.value
+          + '<br>'
+          + 'Finance Officer Helpful: '
+          + document.forms["survey"].elements.financerating.value
+          + '<br>'
+          + 'Will Shop Again: '
+          + document.forms["survey"].elements.shopagain.value;
+        $('#exampleModal').modal();
       }
-
-
-      // TODO update modal with results from survey
-      return surveyvalid;
+      return false;
     }
   </script>
 
