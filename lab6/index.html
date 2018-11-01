@@ -164,7 +164,7 @@
 
         function dealDealer() {
             dealerCards.push(deal());
-            $("div#dealercards span#card" + dealerCards.length).fadeOut("slow");
+            $("div#dealercards span#card" + dealerCards.length).hide();
             $("div#dealercards span#card" + dealerCards.length).html(dealerCards[dealerCards.length - 1].cardImage);
             if (['hearts', 'diamonds'].indexOf(dealerCards[dealerCards.length - 1].Suit) >= 0) {
                 $("div#dealercards span#card" + dealerCards.length).css("color", "red");
@@ -176,7 +176,7 @@
 
         function dealPlayer() {
             playerCards.push(deal());
-            $("div#playercards span#card" + playerCards.length).fadeOut("slow");
+            $("div#playercards span#card" + playerCards.length).hide();
             $("div#playercards span#card" + playerCards.length).html(playerCards[playerCards.length - 1].cardImage);
             if (['hearts', 'diamonds'].indexOf(playerCards[playerCards.length - 1].Suit) >= 0) {
                 $("div#playercards span#card" + playerCards.length).css("color", "red");
