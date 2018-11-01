@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Lab 6 Game</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <style>
+        .playingcard {
+            font-size: 10em;
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+                                  margin: -.1em;
+        }
+        .container {
+            max-width: 1000px;
+        }
+        #deal {
+            cursor: pointer;
+        }
+        #dealercards, #playercards{
+            min-height: 220px;
+        }
+    </style>
+</head>
+
+<body onload="loaded()">
+    <div class="container text-center">
+        <h1>Addition War Game</h1>
+        <p>Click the card deck to deal the cards or press <kbd>Enter</kbd> or <kbd>Spacebar</kbd>. The total value of
+            the cards descides the winner of that round. First
+            to 10 wins. Face cards are worth 10.</p>
+        <hr>
+        <div class="row">
+            <div class="col-6 text-left">
+                <h4>Dealer: <span id="dealerscore"></span></h4>
+            </div>
+            <div class="col-6 text-right">
+                <h4>Player: <span id="playerscore"></span></h4>
+            </div>
+        </div>
+        <div class="row d-flex align-items-center h-100">
+            <div class="col">
+                <h3>Deal the Cards!</h3>
+            </div>
+            <div id="deal" class="col playingcard">&#127220;
+            </div>
+        </div>
+        <hr>
+        <div id="dealercards" class="row d-flex align-items-center h-100">
+            <div class="col">
+                <h2>Dealer</h2>
+            </div>
+            <span id="card1" class="col playingcard text-center">🂩</span>
+            <span id="card2" class="col playingcard text-center">🂩</span>
+        </div>
+        <hr>
+        <div id="playercards" class="row d-flex align-items-center h-100">
+            <div class="col">
+                <h2>Player</h2>
+            </div>
+            <span id="card1" class="col playingcard text-center">🂩</span>
+            <span id="card2" class="col playingcard text-center">🂩</span>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Game Over</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Play Again</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var cardUnicodePrefix = '&#127';
+        var cardImages = [];
+        var dealerscore = 0;
+        var playerscore = 0;
+        var playerCards = [];
+        var dealerCards = [];
+        var deck = new Array();
+        var suits = ["spades", "hearts", "diamonds", "clubs"];
+        var values = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+
+        function loaded() {
+            $("#deal").click(function () {  //check for click and start game
+                prepareGame();
+
+            });
+            $(document).keypress(function (event) {  // check for enter or spacebar press and then start game
+                if (event.charCode == 13 || event.charCode == 32) {
+                    prepareGame();
+                }
+            });
+            prepareGame();
+        }
+
+        function prepareGame() {  //starts a new game
+            deck.length = 0; //reset deck for new game
+            playerCards.length = 0; //resets players hand
+            dealerCards.length = 0; //resets dealers hand
+            prepareCardImages(); // prepare unicode card deck
+            deck = getDeck();    // get a new deck
+            deck = shuffle(deck); // shuffle the deck
+            dealPlayer(); // player card 1
+            dealPlayer();  // player card 2
+            dealDealer();   // dealer card 1
+            dealDealer();  // dealer card 1
+            evaluateScore();  // total the cards
+        }
+
+        function prepareCardImages() {
+            var excludeCards = [148, 151, 152, 164, 167, 168, 180, 183, 184, 196];  //exclude non-standard playing cards in the unicode bank
+            for (var i = 0; i < 63; i++) {
+                if (excludeCards.indexOf((136 + i)) < 0) {
+                    cardImages.push('' + cardUnicodePrefix + (136 + i));
+                }
+            }
+        }
+
+        function getDeck() {
+            var deck = new Array();
+            var imageUnicode = 1;
+            for (var i = 0; i < suits.length; i++) {
+                for (var x = 0; x < values.length; x++) {
+                    var card = { Value: values[x], Suit: suits[i], cardImage: (cardImages[imageUnicode]) };
+                    deck.push(card);
+                    imageUnicode++;
+                }
+            }
+            return deck;
+        }
+
+        function shuffle(deck) {
+            for (var i = 0; i < 1000; i++) { // shuffle 1000 times
+                var location1 = Math.floor((Math.random() * deck.length));
+                var location2 = Math.floor((Math.random() * deck.length));
+                var tmp = deck[location1];
+                deck[location1] = deck[location2];
+                deck[location2] = tmp;
+            }
+            return deck;
+        }
+
+        function dealDealer() {
+            dealerCards.push(deal());
+            $("div#dealercards span#card" + dealerCards.length).fadeOut("slow");
+            $("div#dealercards span#card" + dealerCards.length).html(dealerCards[dealerCards.length - 1].cardImage);
+            if (['hearts', 'diamonds'].indexOf(dealerCards[dealerCards.length - 1].Suit) >= 0) {
+                $("div#dealercards span#card" + dealerCards.length).css("color", "red");
+            } else {
+                $("div#dealercards span#card" + dealerCards.length).css("color", "black");
+            }
+            $("div#dealercards span#card" + dealerCards.length).slideDown("slow");
+        }
+
+        function dealPlayer() {
+            playerCards.push(deal());
+            $("div#playercards span#card" + playerCards.length).fadeOut("slow");
+            $("div#playercards span#card" + playerCards.length).html(playerCards[playerCards.length - 1].cardImage);
+            if (['hearts', 'diamonds'].indexOf(playerCards[playerCards.length - 1].Suit) >= 0) {
+                $("div#playercards span#card" + playerCards.length).css("color", "red");
+            } else {
+                $("div#playercards span#card" + playerCards.length).css("color", "black");
+            }
+            $("div#playercards span#card" + playerCards.length).slideDown("slow");
+        }
+
+
+        function deal() {  //returns and removes a single card from the deck
+            let location = Math.floor((Math.random() * deck.length));  //get random location in length of deck
+            let card = deck.splice([location], 1)[0];  // retrieve card and remove it from the deck
+            return card;
+        }
+
+        function evaluateScore() {
+            let dealerTotal = 0;
+            let playerTotal = 0;
+            for (var i = 0; i < dealerCards.length; i++) {
+                if (values.indexOf(dealerCards[i].Value) < 1 || values.indexOf(dealerCards[i].Value) > 9) {
+                    dealerTotal += 10;
+                } else {
+                    dealerTotal += parseInt(dealerCards[i].Value, 10);
+                }
+            }
+
+            for (var i = 0; i < playerCards.length; i++) {
+                if (values.indexOf(playerCards[i].Value) < 1 || values.indexOf(playerCards[i].Value) > 9) {
+                    playerTotal += 10;
+                } else {
+                    playerTotal += parseInt(playerCards[i].Value, 10);
+                }
+            }
+
+            if (playerTotal > dealerTotal) {
+                playerscore += 1;
+            } else {
+                dealerscore += 1;
+            }
+
+            //display the scores
+            $("#playerscore").html(playerscore);
+            $("#dealerscore").html(dealerscore);
+
+            //check for a winner
+            if (playerscore >= 10) {
+                endGame("player");
+            } else if (dealerscore >= 10)
+                endGame("dealer");
+        }
+
+        function endGame(winner) {
+            let message = "Game over, the " + winner + " has won!";
+            $("div.modal-body").text(message);  //update modal text with message
+            $('#exampleModalCenter').modal("show"); //show the modal
+            dealerscore = playerscore = 0;  //rest score
+        }
+
+    </script>
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
